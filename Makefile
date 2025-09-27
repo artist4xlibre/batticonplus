@@ -96,7 +96,7 @@ install: $(BIN) $(TRANSLATIONS)
 	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(BINDIR)"
 	$(VERBOSE) $(INSTALL_BIN) $(BIN) "$(DESTDIR)$(BINDIR)"/
 	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(DOCDIR)"
-	$(VERBOSE) $(INSTALL_DATA) README "$(DESTDIR)$(DOCDIR)"/
+	$(VERBOSE) $(INSTALL_DATA) README.md "$(DESTDIR)$(DOCDIR)"/
 	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(MANDIR)"
 	$(VERBOSE) $(INSTALL_DATA) batticonplus.1 "$(DESTDIR)$(MANDIR)"/
 	$(VERBOSE) for language in $(LANGUAGES); \
@@ -108,7 +108,7 @@ install: $(BIN) $(TRANSLATIONS)
 uninstall:
 	@echo -e '\033[0;33mUninstalling $(PACKAGE_NAME)\033[0m'
 	$(VERBOSE) $(RM) "$(DESTDIR)$(BINDIR)"/$(BIN)
-	$(VERBOSE) $(RM) "$(DESTDIR)$(DOCDIR)"/README
+	$(VERBOSE) $(RM) "$(DESTDIR)$(DOCDIR)"/README.md
 	$(VERBOSE) $(RM) "$(DESTDIR)$(MANDIR)"/batticonplus.1
 	$(VERBOSE) for language in $(LANGUAGES); \
 	do \
