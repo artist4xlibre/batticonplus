@@ -1,0 +1,254 @@
+# Japanese translation for batticonplus.
+# Copyright (C) 2015-2018 Valère Monseur
+# This file is distributed under the same license as the batticonplus package.
+# Eshin Kunishima <ek@esh.ink>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: batticonplus 1.6.7\n"
+"Report-Msgid-Bugs-To: valere.monseur@ymail.com\n"
+"POT-Creation-Date: 2016-09-11 18:57+0900\n"
+"PO-Revision-Date: 2018-04-08 23:34+0100\n"
+"Language-Team: N/A\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Last-Translator: Eshin Kunishima <ek@esh.ink>\n"
+"Language: ja\n"
+
+#: batticonplus.c:154
+msgid "Display the version"
+msgstr "バージョンを表示"
+
+#: batticonplus.c:155
+msgid "Display debug information"
+msgstr "デバッグ情報を表示"
+
+#: batticonplus.c:156
+msgid "Set update interval (in seconds)"
+msgstr "更新間隔を設定 (秒)"
+
+#: batticonplus.c:157
+msgid "Set icon type ('standard', 'notification' or 'symbolic')"
+msgstr "アイコンタイプを設定 ('標準', '通知', '記号')"
+
+#: batticonplus.c:158
+msgid "Set low battery level (in percent)"
+msgstr "低いバッテリーレベルの設定 (パーセント)"
+
+#: batticonplus.c:159
+msgid "Set critical battery level (in percent)"
+msgstr "危機的なバッテリーレベルの設定 (パーセント)"
+
+#: batticonplus.c:160
+msgid "Command to execute when critical battery level is reached"
+msgstr "バッテリーレベルが危機的な状態に陥った時に実行するコマンド"
+
+#: batticonplus.c:161
+msgid "Command to execute when left clicking on tray icon"
+msgstr "トレイのアイコンが左クリックされた時に実行するコマンド"
+
+#: batticonplus.c:163
+msgid "Hide the notification popups"
+msgstr "通知ポップアップを隠す"
+
+#: batticonplus.c:165
+msgid "List available icon types"
+msgstr "利用可能なアイコンタイプの一覧"
+
+#: batticonplus.c:166
+msgid "List available power supplies (battery and AC)"
+msgstr "利用可能な電源の一覧 (バッテリーとAC電源)"
+
+#: batticonplus.c:170
+msgid "[BATTERY ID]"
+msgstr "[バッテリー ID]"
+
+#: batticonplus.c:174
+#, c-format
+msgid "Cannot parse command line arguments: %s\n"
+msgstr "コマンドラインの引数をパース出来ません: %s\n"
+
+#: batticonplus.c:185
+msgid ""
+"batticonplus: a lightweight and fast battery icon that sits in your system "
+"tray\n"
+msgstr ""
+"batticonplus: 軽量で高速なシステムトレイで動作するバッテリーアイコン\n"
+
+#: batticonplus.c:186
+#, c-format
+msgid "version %s\n"
+msgstr "バージョン %s\n"
+
+#: batticonplus.c:194
+msgid "List of available power supplies:\n"
+msgstr "利用可能な電源の一覧:\n"
+
+#: batticonplus.c:209
+msgid "List of available icon types:\n"
+msgstr "利用可能なアイコンタイプの一覧:\n"
+
+#: batticonplus.c:210 batticonplus.c:211 batticonplus.c:212
+msgid "available"
+msgstr "利用可能"
+
+#: batticonplus.c:210 batticonplus.c:211 batticonplus.c:212 batticonplus.c:540
+#: batticonplus.c:548 batticonplus.c:570
+msgid "unavailable"
+msgstr "利用不可能"
+
+#: batticonplus.c:226
+#, c-format
+msgid "Unknown icon type: %s\n"
+msgstr "未知のアイコンタイプ: %s\n"
+
+#: batticonplus.c:238
+msgid "No icon type found!\n"
+msgstr "アイコンタイプが見つかりません\n"
+
+#: batticonplus.c:245
+#, c-format
+msgid ""
+"Invalid update interval! It has been reset to default (%d seconds)\n"
+msgstr ""
+"更新間隔の値が無効です。デフォルト値(%d 秒)にリセットされました。\n"
+
+#: batticonplus.c:252
+#, c-format
+msgid "Invalid low level! It has been reset to default (%d percent)\n"
+msgstr ""
+"低いバッテリーレベルの値が無効です。デフォルト値(%d 秒)にリセットされま"
+"した。\n"
+
+#: batticonplus.c:257
+#, c-format
+msgid ""
+"Invalid critical level! It has been reset to default (%d percent)\n"
+msgstr ""
+"危機的なバッテリーレベルの値が無効です。デフォルト値(%d 秒)にリセットさ"
+"れました。\n"
+
+#: batticonplus.c:263
+msgid ""
+"Critical level is higher than low level! They have been reset to "
+"default\n"
+msgstr ""
+"危機的なバッテリーレベルの値は、低いバッテリーレベルの値よりも大きな値が"
+"設定されています。デフォルトの値にリセットされました。\n"
+
+#: batticonplus.c:294 batticonplus.c:326
+#, c-format
+msgid "type: %-*.*s\tid: %-*.*s\tpath: %s\n"
+msgstr "type: %-*.*s\tid: %-*.*s\tpath: %s\n"
+
+#: batticonplus.c:294
+msgid "Battery"
+msgstr "バッテリー"
+
+#: batticonplus.c:326
+msgid "AC"
+msgstr "AC電源"
+
+#: batticonplus.c:348
+#, c-format
+msgid "Cannot open sysfs directory: %s (%s)\n"
+msgstr "sysfs ディレクトリを開けません: %s (%s)\n"
+
+#: batticonplus.c:355
+#, c-format
+msgid "No battery with suffix %s found!\n"
+msgstr "接尾に %s を含むバッテリーが見つかりません\n"
+
+#: batticonplus.c:360
+msgid "No battery nor AC power supply found!\n"
+msgstr "バッテリーもAC電源も見つかりません\n"
+
+#: batticonplus.c:672 batticonplus.c:675
+msgid "AC only, no battery!"
+msgstr "バッテリーはありませんが、AC電源を使用中です"
+
+#: batticonplus.c:793
+#, c-format
+msgid "Spawning critical battery level command in 30 seconds: %s"
+msgstr ""
+"30秒以内にバッテリーレベルが危機的な状態に陥った時に実行するコマンドを実"
+"行します: %s"
+
+#: batticonplus.c:797
+#, c-format
+msgid "Cannot spawn critical battery level command: %s\n"
+msgstr ""
+"バッテリーレベルが危機的な状態に陥った時に実行するコマンドを実行できませ"
+"ん: %s\n"
+
+#: batticonplus.c:800
+msgid "Cannot spawn critical battery level command!"
+msgstr ""
+"バッテリーレベルが危機的な状態に陥った時に実行するコマンドを実行できませ"
+"ん"
+
+#: batticonplus.c:817
+#, c-format
+msgid "Cannot spawn left click command: %s\n"
+msgstr "左クリックのコマンドを起動できません: %s\n"
+
+#: batticonplus.c:820
+msgid "Cannot spawn left click command!"
+msgstr "左クリックのコマンドを起動できません"
+
+#: batticonplus.c:884
+msgid "Battery is missing!"
+msgstr "バッテリーは見つかりません"
+
+#: batticonplus.c:888
+msgid "Battery status is unknown!"
+msgstr "バッテリーの状態は不明です"
+
+#: batticonplus.c:892
+msgid "Battery is charged!"
+msgstr "バッテリーは充電されました"
+
+#: batticonplus.c:896
+#, c-format
+msgid "Battery is discharging (%i%% remaining)"
+msgstr "バッテリーは放電中です (残り %i%%)"
+
+#: batticonplus.c:900
+#, c-format
+msgid "Battery is not charging (%i%% remaining)"
+msgstr "バッテリーは充電されていません (残り %i%%)"
+
+#: batticonplus.c:904
+#, c-format
+msgid "Battery level is low! (%i%% remaining)"
+msgstr "バッテリー残量が少なくなっています (残り %i%%)"
+
+#: batticonplus.c:908
+#, c-format
+msgid "Battery level is critical! (%i%% remaining)"
+msgstr "バッテリー残量が危機的な状態です (残り %i%%)"
+
+#: batticonplus.c:912
+#, c-format
+msgid "Battery is charging (%i%%)"
+msgstr "バッテリーは充電中です (%i%%)"
+
+#: batticonplus.c:941
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d 分"
+
+#: batticonplus.c:942
+#, c-format
+msgid "%d hour, %s remaining"
+msgid_plural "%d hours, %s remaining"
+msgstr[0] "残り %d 時間 %s"
+
+#: batticonplus.c:944
+#, c-format
+msgid "%d minute remaining"
+msgid_plural "%d minutes remaining"
+msgstr[0] "残り %d 分"

@@ -1,0 +1,14 @@
+2025-09-26  Carlo den Otter
+
+ - Cloned from cbatticon.
+ - Added battery name to systray icon tooltip.
+ - Added icon theme and notification support (thx Bing Liu).
+ - Use battery BAT0 by default, if available.
+ - Fixed bug of too large 'remaining' times in icon tooltip while not charging.
+ - Excluded hid devices like mice and keyboards.
+ - Provide battery 'Remaining Capacity' percentage, as compared to its design
+   capacity, in the systray icon tooltip. Is possibly limited by a bios setting.
+ - Added Ayatana AppIndicator support, which might be needed when using Wayland
+    (thx Zariep).
+ - Added option to disable charge notification on startup (thx Drew Abbott).
+

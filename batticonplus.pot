@@ -1,0 +1,275 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the batticonplus package.
+# Valère Monseur <archlinux@vale.re>, 2022.
+# Bing Liu <sipingal@163.com>, 2025.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: batticonplus 1.6.13\n"
+"Report-Msgid-Bugs-To: archlinux@vale.re\n"
+"POT-Creation-Date: 2025-01-02 11:34+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: batticonplus.c:191
+msgid "Display the version"
+msgstr ""
+
+#: batticonplus.c:192
+msgid "Display debug information"
+msgstr ""
+
+#: batticonplus.c:193
+msgid "Set update interval (in seconds)"
+msgstr ""
+
+#: batticonplus.c:194
+msgid "Set icon type ('standard', 'notification' or 'symbolic')"
+msgstr ""
+
+#: batticonplus.c:195
+msgid "Set low battery level (in percent)"
+msgstr ""
+
+#: batticonplus.c:196
+msgid "Set critical battery level (in percent)"
+msgstr ""
+
+#: batticonplus.c:197
+msgid "Command to execute when low battery level is reached"
+msgstr ""
+
+#: batticonplus.c:198
+msgid "Command to execute when critical battery level is reached"
+msgstr ""
+
+#: batticonplus.c:199
+msgid "Command to execute when left clicking on tray icon"
+msgstr ""
+
+#: batticonplus.c:201
+msgid "Hide the notification popups"
+msgstr ""
+
+#: batticonplus.c:203
+msgid "List available icon types"
+msgstr ""
+
+#: batticonplus.c:204
+msgid "Use custom icon theme by name"
+msgstr ""
+
+#: batticonplus.c:205
+msgid "List available power supplies (battery and AC)"
+msgstr ""
+
+#: batticonplus.c:209
+msgid "[BATTERY ID]"
+msgstr ""
+
+#: batticonplus.c:213
+#, c-format
+msgid "Cannot parse command line arguments: %s\n"
+msgstr ""
+
+#: batticonplus.c:224
+msgid ""
+"batticonplus: a lightweight and fast battery icon that sits in your system "
+"tray\n"
+msgstr ""
+
+#: batticonplus.c:225
+#, c-format
+msgid "version %s\n"
+msgstr ""
+
+#: batticonplus.c:233
+msgid "List of available power supplies:\n"
+msgstr ""
+
+#: batticonplus.c:248
+#, c-format
+msgid "Cannot use icon theme %s: %s\n"
+msgstr ""
+
+#: batticonplus.c:261
+msgid "List of available icon types:\n"
+msgstr ""
+
+#: batticonplus.c:262 batticonplus.c:263 batticonplus.c:264
+msgid "available"
+msgstr ""
+
+#: batticonplus.c:262 batticonplus.c:263 batticonplus.c:264
+msgid "unavailable"
+msgstr ""
+
+#: batticonplus.c:278
+#, c-format
+msgid "Unknown icon type: %s\n"
+msgstr ""
+
+#: batticonplus.c:290
+msgid "No icon type found!\n"
+msgstr ""
+
+#: batticonplus.c:297
+#, c-format
+msgid "Invalid update interval! It has been reset to default (%d seconds)\n"
+msgstr ""
+
+#: batticonplus.c:304
+#, c-format
+msgid "Invalid low level! It has been reset to default (%d percent)\n"
+msgstr ""
+
+#: batticonplus.c:309
+#, c-format
+msgid "Invalid critical level! It has been reset to default (%d percent)\n"
+msgstr ""
+
+#: batticonplus.c:315
+msgid ""
+"Critical level is higher than low level! They have been reset to default\n"
+msgstr ""
+
+#: batticonplus.c:409 batticonplus.c:444
+#, c-format
+msgid "type: %-*.*s\tid: %-*.*s\tpath: %s\n"
+msgstr ""
+
+#: batticonplus.c:409
+msgid "Battery"
+msgstr ""
+
+#: batticonplus.c:444
+msgid "AC"
+msgstr ""
+
+#: batticonplus.c:466
+#, c-format
+msgid "Cannot open sysfs directory: %s (%s)\n"
+msgstr ""
+
+#: batticonplus.c:473
+#, c-format
+msgid "No battery with suffix %s found!\n"
+msgstr ""
+
+#: batticonplus.c:478
+msgid "No battery nor AC power supply found!\n"
+msgstr ""
+
+#: batticonplus.c:827 batticonplus.c:829
+msgid "AC only, no battery!"
+msgstr ""
+
+#: batticonplus.c:956
+#, c-format
+msgid "Spawning low battery level command in 5 seconds: %s"
+msgstr ""
+
+#: batticonplus.c:961
+msgid "Skipping low battery level command, no longer discharging"
+msgstr ""
+
+#: batticonplus.c:967 batticonplus.c:969
+#, c-format
+msgid "Cannot spawn low battery level command: %s\n"
+msgstr ""
+
+#: batticonplus.c:974
+msgid "Cannot spawn low battery level command!"
+msgstr ""
+
+#: batticonplus.c:984
+#, c-format
+msgid "Spawning critical battery level command in 30 seconds: %s"
+msgstr ""
+
+#: batticonplus.c:989
+msgid "Skipping critical battery level command, no longer discharging"
+msgstr ""
+
+#: batticonplus.c:995 batticonplus.c:997
+#, c-format
+msgid "Cannot spawn critical battery level command: %s\n"
+msgstr ""
+
+#: batticonplus.c:1002
+msgid "Cannot spawn critical battery level command!"
+msgstr ""
+
+#: batticonplus.c:1017 batticonplus.c:1019
+#, c-format
+msgid "Cannot spawn left click command: %s\n"
+msgstr ""
+
+#: batticonplus.c:1024
+msgid "Cannot spawn left click command!"
+msgstr ""
+
+#: batticonplus.c:1088
+msgid "Battery is missing!"
+msgstr ""
+
+#: batticonplus.c:1092
+msgid "Battery status is unknown!"
+msgstr ""
+
+#: batticonplus.c:1096
+msgid "Battery is charged!"
+msgstr ""
+
+#: batticonplus.c:1100
+#, c-format
+msgid "Battery is discharging (%i%% remaining)"
+msgstr ""
+
+#: batticonplus.c:1104
+#, c-format
+msgid "Battery is not charging (%i%% remaining)"
+msgstr ""
+
+#: batticonplus.c:1108
+#, c-format
+msgid "Battery level is low! (%i%% remaining)"
+msgstr ""
+
+#: batticonplus.c:1112
+#, c-format
+msgid "Battery level is critical! (%i%% remaining)"
+msgstr ""
+
+#: batticonplus.c:1116
+#, c-format
+msgid "Battery is charging (%i%%)"
+msgstr ""
+
+#: batticonplus.c:1145
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: batticonplus.c:1146
+#, c-format
+msgid "%d hour, %s remaining"
+msgid_plural "%d hours, %s remaining"
+msgstr[0] ""
+msgstr[1] ""
+
+#: batticonplus.c:1148
+#, c-format
+msgid "%d minute remaining"
+msgid_plural "%d minutes remaining"
+msgstr[0] ""
+msgstr[1] ""
