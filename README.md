@@ -3,6 +3,11 @@ Lightweight battery status icon for the system tray and notifier (based on cbatt
 
 Originally based on code from xbattbar-acpi.
 
+Note: The value for 'Maximum Capacity' in the systray icon tooltip is the\
+percentage of the current maximum charge capactiy compared to its design\
+capacity. The maximum and minimum charge can on some systems be limited by bios\
+settings in which case e.g. the displayed maximum capacity can be 80% or lower.
+
 `Make options:`\
 `  WITH_GTK3=1 to build against gtk3, it is the default option`\
 `  WITH_GTK3=0 to build against gtk2 (version 2.16)`
@@ -44,8 +49,8 @@ Originally based on code from xbattbar-acpi.
 `  command low level      : none`\
 `  command critical level : none`\
 `  command left click     : none`\
-`  battery id             : the first one that is reported by sysfs`\
-`                           (check your setup with --list-power-supplies)`
+`  battery id             : BAT0, if present`\
+`                           (check present power sources with --list-power-supplies)`
 
 `Examples:`\
 `  batticonplus`\
@@ -55,45 +60,9 @@ Originally based on code from xbattbar-acpi.
 `  batticonplus -u 20 -i notification -r 3 -c "poweroff" -l 15 -o "xbacklight = 5"`
 
 Thanks to:
-
-  - hasufell <hasufell@gentoo.org> for the following improvements:
-  Allow AC only tray icon
-  Allow building with(out) libnotify support
-  Allow building with gtk2 or gtk3
-  Allow execution of command when left clicking on the tray icon
-  Many other improvements in Makefile, comments, whitespace cleaning, ...
-
-  - fluxer <xakepa10@gmail.com> to allow compilation with libnotify < 0.7.0
-
-  - slyos <rameshvraj@gmail.com> to allow calculation of estimated remaining
-  time for those batteries not providing the current (dis)charge rate.
-
   - Bing Liu for adding icon theme and notification support
-
   - Zariep for adding Ayatana AppIndicator support
-
   - Drew Abbott for the option to disable charge notification on startup
-
-  - Alexandr (Pro-pra) Proklov <ssaa@rambler.ru> for the initial translation support
-
-  - Undeterminant <claire@undeterminant.net> for the plural translations support
-
-  - Translators:
-  Brazilian Portuguese: Raffaello Salvetti <raffaello.salvetti@gmail.com>
-  Bosnian, Croatian, Serbian: Dino Duratović <dinomol@mail.com>
-  French: Valère Monseur <valere.monseur@ymail.com>
-  German: Julian Ospald <hasufell@gentoo.org>
-  Greek: George Vlahavas <vlahavas@gmail.com>
-  Hebrew: Yotam Salmon <yotam.salmon@gmail.com>
-  Indonesia: Mahyuddin <yudial@gmail.com>
-  Japanese: Eshin Kunishima <ek@esh.ink>
-  Spanish: Mauricio Medeiros <jesusmlmph@gmail.com>
-  Turkish: Behzat Erte <behzaterte@yandex.com>
-  Russian: Alexandr Proklov <ssaa@rambler.ru>
-  Traditional chinese: Lego Chiang <qas612820704@gmail.com>
-  Dutch: Carlo den Otter
-
-  - All other contributors reporting bugs, sending feature requests, ...
 
 --
 

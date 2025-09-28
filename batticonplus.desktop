@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Battery Icon Plus
+Comment=Lightweight battery status icon for the system tray and notifier
+Exec=batticonplus
+Terminal=false
+Type=Application
+Icon=batticonplus
+Categories=Utility;System;GTK;
+StartupNotify=false

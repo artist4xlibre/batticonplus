@@ -1,4 +1,4 @@
-2025-09-26  Carlo den Otter
+2025-09-28  Carlo den Otter
 
  - Cloned from cbatticon.
  - Added battery name to systray icon tooltip.
@@ -11,4 +11,5 @@
  - Added Ayatana AppIndicator support, which might be needed when using Wayland
     (thx Zariep).
  - Added option to disable charge notification on startup (thx Drew Abbott).
+ - Added application desktop file and icon.
 
