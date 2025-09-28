@@ -29,7 +29,10 @@ PACKAGE_NAME = batticonplus
 VERSION = $(shell grep BATTICONPLUS_VERSION_NUMBER batticonplus.c | awk '{print $$3}')
 PREFIX ?= /usr
 BINDIR = $(PREFIX)/bin
+APPDIR = $(PREFIX)/share/applications
+ICODIR = $(PREFIX)/share/icons/hicolor/scalable/apps
 DOCDIR = $(PREFIX)/share/doc/$(PACKAGE_NAME)-$(VERSION)
+LICDIR = $(PREFIX)/share/licenses/$(PACKAGE_NAME)-$(VERSION)
 MANDIR = $(PREFIX)/share/man/man1
 NLSDIR = $(PREFIX)/share/locale
 LANGUAGES = bs de el es fr he hr id ja nl pt_BR ru sk sr tr zh_TW
@@ -95,10 +98,17 @@ install: $(BIN) $(TRANSLATIONS)
 	@echo -e '\033[0;33mInstalling $(PACKAGE_NAME)\033[0m'
 	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(BINDIR)"
 	$(VERBOSE) $(INSTALL_BIN) $(BIN) "$(DESTDIR)$(BINDIR)"/
+	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(APPDIR)"
+	$(VERBOSE) $(INSTALL_DATA) batticonplus.desktop "$(DESTDIR)$(APPDIR)"/
+	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(ICODIR)"
+	$(VERBOSE) $(INSTALL_DATA) batticonplus.svg "$(DESTDIR)$(ICODIR)"/
 	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(DOCDIR)"
+	$(VERBOSE) $(INSTALL_DATA) Changelog "$(DESTDIR)$(DOCDIR)"/
 	$(VERBOSE) $(INSTALL_DATA) README.md "$(DESTDIR)$(DOCDIR)"/
 	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(MANDIR)"
 	$(VERBOSE) $(INSTALL_DATA) batticonplus.1 "$(DESTDIR)$(MANDIR)"/
+	$(VERBOSE) $(INSTALL) -d "$(DESTDIR)$(LICDIR)"
+	$(VERBOSE) $(INSTALL_DATA) COPYING "$(DESTDIR)$(LICDIR)"/
 	$(VERBOSE) for language in $(LANGUAGES); \
 	do \
 		$(INSTALL) -d "$(DESTDIR)$(NLSDIR)"/$$language/LC_MESSAGES; \
@@ -108,8 +118,12 @@ install: $(BIN) $(TRANSLATIONS)
 uninstall:
 	@echo -e '\033[0;33mUninstalling $(PACKAGE_NAME)\033[0m'
 	$(VERBOSE) $(RM) "$(DESTDIR)$(BINDIR)"/$(BIN)
+	$(VERBOSE) $(RM) "$(DESTDIR)$(APPDIR)"/batticonplus.desktop
+	$(VERBOSE) $(RM) "$(DESTDIR)$(ICODIR)"/batticonplus.svg
+	$(VERBOSE) $(RM) "$(DESTDIR)$(DOCDIR)"/Changelog
 	$(VERBOSE) $(RM) "$(DESTDIR)$(DOCDIR)"/README.md
 	$(VERBOSE) $(RM) "$(DESTDIR)$(MANDIR)"/batticonplus.1
+	$(VERBOSE) $(RM) "$(DESTDIR)$(LICDIR)"/COPYING
 	$(VERBOSE) for language in $(LANGUAGES); \
 	do \
 		$(VERBOSE) $(RM) "$(DESTDIR)$(NLSDIR)"/$$language/LC_MESSAGES/$(PACKAGE_NAME).mo; \

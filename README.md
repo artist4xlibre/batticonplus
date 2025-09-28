@@ -3,9 +3,9 @@ Lightweight battery status icon for the system tray and notifier (based on cbatt
 
 Originally based on code from xbattbar-acpi.
 
-Note: The value for 'Maximum Capacity' in the systray icon tooltip is the\
-percentage of the current maximum charge capactiy compared to its design\
-capacity. The maximum and minimum charge can on some systems be limited by bios\
+Note: The percentage for the battery's 'Maximum Capacity' in the systray icon\
+tooltip is the comparison of its current maximum charge capacity and its design.\
+On some systems the maximum and minimum charge can be limited by bios\
 settings in which case e.g. the displayed maximum capacity can be 80% or lower.
 
 `Make options:`\
