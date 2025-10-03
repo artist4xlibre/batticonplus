@@ -1,13 +1,13 @@
 /*
  * Copyright (C) 2011-2013 Colin Jones
  * Copyright (C) 2014-2023 Valère Monseur
- * Copyright (C) 2025      Carlo den Otter
+ * Copyright (C) 2025	Carlo den Otter
  *
  * Based on code by Matteo Marchesotti
  * Copyright (C) 2007 Matteo Marchesotti <matteo.marchesotti@fsfe.org>
  *
  * batticonplus: a lightweight and fast battery icon that sits in your system tray
- *               based on cbatticon
+ *	based on cbatticon
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 #define BATTICONPLUS_VERSION_NUMBER 2.0
 #define BATTICONPLUS_VERSION_STRING "2.0.0"
-#define BATTICONPLUS_STRING         "batticonplus"
+#define BATTICONPLUS_STRING	"batticonplus"
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -48,8 +48,9 @@
 #define SYSFS_PATH "/sys/class/power_supply"
 
 #define DEFAULT_UPDATE_INTERVAL 5
-#define DEFAULT_LOW_LEVEL       20
-#define DEFAULT_CRITICAL_LEVEL  5
+#define DEFAULT_LOW_LEVEL	20
+#define DEFAULT_CRITICAL_LEVEL	5
+#define DEFAULT_CHARGE_LEVEL	80
 
 #define STR_LTH 256
 
@@ -68,7 +69,8 @@ enum {
 	DISCHARGING,
 	NOTCHARGING,
 	LOW_LEVEL,
-	CRITICAL_LEVEL
+	CRITICAL_LEVEL,
+ 	CHARGE_LEVEL
 };
 
 struct configuration {
@@ -78,16 +80,17 @@ struct configuration {
 	gint icon_type;
 	gint low_level;
 	gint critical_level;
-	gchar   *command_low_level;
-	gchar   *command_critical_level;
-	gchar   *command_left_click;
+	gchar	*command_low_level;
+	gchar	*command_critical_level;
+	gchar	*command_left_click;
 #ifdef WITH_NOTIFY
 	gboolean hide_notification;
 #endif
 	gboolean list_icon_types;
-	gchar   *icon_theme_name;
+	gchar	*icon_theme_name;
 	gboolean list_power_supplies;
 	gboolean disable_startup_notify;
+	gboolean charge_reached_notify;
 } configuration = {
 	FALSE,
 	FALSE,
@@ -105,12 +108,13 @@ struct configuration {
 	NULL,
 	FALSE,
 	FALSE,
+	FALSE,
 };
 
 struct icon {
-    #ifdef WITH_APPINDICATOR
+	#ifdef WITH_APPINDICATOR
 	AppIndicator *app_indicator;
-    #else
+	#else
 	GtkStatusIcon *gtk_icon;
 	#endif
 	gchar *name;
@@ -162,19 +166,20 @@ static gchar* get_icon_name (gint state, gint percentage);
 gchar* get_icon_path_from_theme(const gchar *theme_name, const gchar *icon_name);
 
 static gchar *battery_suffix = NULL;
-static gchar *battery_path   = NULL;
-static gchar *battery_file   = NULL;
-static gchar *ac_path        = NULL;
+static gchar *battery_path	= NULL;
+static gchar *battery_file	= NULL;
+static gchar *ac_path	= NULL;
 
 /*
  * workaround for limited/bugged batteries/drivers that don't provide current rate
  * the next 4 variables are used to calculate estimated time
  */
 
-static gboolean estimation_needed             = FALSE;
+static gboolean estimation_needed	= FALSE;
 static gdouble estimation_remaining_capacity = -1;
-static gint estimation_time               = -1;
-static GTimer  *estimation_timer              = NULL;
+static gint estimation_time	= -1;
+static GTimer	*estimation_timer	= NULL;
+static gboolean charge_reached_notify_sent	= FALSE;
 
 /*
  * command line options function
@@ -185,7 +190,7 @@ GtkIconTheme* set_custom_icon_theme(const char *theme_name, GError **error) {
 
 	if (theme == NULL) {
 		g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-		            "Failed to get default icon theme");
+			"Failed to get default icon theme");
 		return NULL;
 	}
 
@@ -194,7 +199,7 @@ GtkIconTheme* set_custom_icon_theme(const char *theme_name, GError **error) {
 
 		if (!gtk_icon_theme_has_icon(theme, "folder")) {
 			g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-			            "Theme '%s' appears to be invalid", theme_name);
+				"Theme '%s' appears to be invalid", theme_name);
 			return NULL;
 		}
 	}
@@ -224,7 +229,8 @@ static gint get_options (int argc, char **argv)
 		{ "list-icon-types", 't', 0, G_OPTION_ARG_NONE, &configuration.list_icon_types, N_("List available icon types"), NULL },
 		{ "icon-theme-name", 'I', 0, G_OPTION_ARG_STRING, &configuration.icon_theme_name, N_("Use custom icon theme by name"), NULL },
 		{ "list-power-supplies", 'p', 0, G_OPTION_ARG_NONE, &configuration.list_power_supplies, N_("List available power supplies (battery and AC)"), NULL },
-                { "disable-startup-notify", 's', 0, G_OPTION_ARG_NONE  , &configuration.disable_startup_notify, N_("Suppress the startup notification"), NULL },
+	{ "disable-startup-notify", 's', 0, G_OPTION_ARG_NONE	, &configuration.disable_startup_notify, N_("Suppress the startup notification"), NULL },
+		{ "charge-reached-notify", 'w', 0, G_OPTION_ARG_NONE, &configuration.charge_reached_notify, N_("Warn when chargng and level reached"), NULL },
 		{ NULL }
 	};
 
@@ -275,15 +281,15 @@ static gint get_options (int argc, char **argv)
 		icon_theme = gtk_icon_theme_get_default();
 	}
 
-    #define HAS_STANDARD_ICON_TYPE     gtk_icon_theme_has_icon (icon_theme, "battery-full")
-    #define HAS_NOTIFICATION_ICON_TYPE gtk_icon_theme_has_icon (icon_theme, "notification-battery-100")
-    #define HAS_SYMBOLIC_ICON_TYPE     gtk_icon_theme_has_icon (icon_theme, "battery-full-symbolic")
+	#define HAS_STANDARD_ICON_TYPE	gtk_icon_theme_has_icon (icon_theme, "battery-full")
+	#define HAS_NOTIFICATION_ICON_TYPE gtk_icon_theme_has_icon (icon_theme, "notification-battery-100")
+	#define HAS_SYMBOLIC_ICON_TYPE	gtk_icon_theme_has_icon (icon_theme, "battery-full-symbolic")
 
 	if (configuration.list_icon_types == TRUE) {
 		g_print (_("List of available icon types:\n"));
-		g_print ("standard\t%s\n", HAS_STANDARD_ICON_TYPE     == TRUE ? _("available") : _("unavailable"));
+		g_print ("standard\t%s\n", HAS_STANDARD_ICON_TYPE	== TRUE ? _("available") : _("unavailable"));
 		g_print ("notification\t%s\n", HAS_NOTIFICATION_ICON_TYPE == TRUE ? _("available") : _("unavailable"));
-		g_print ("symbolic\t%s\n", HAS_SYMBOLIC_ICON_TYPE     == TRUE ? _("available") : _("unavailable"));
+		g_print ("symbolic\t%s\n", HAS_SYMBOLIC_ICON_TYPE	== TRUE ? _("available") : _("unavailable"));
 
 		return 0;
 	}
@@ -384,7 +390,7 @@ static gboolean changed_power_supplies (void)
 
 	if (configuration.debug_output == TRUE && power_supplies_changed == TRUE) {
 		g_printf ("power supplies changed: old total/num ps=%d/%d, new total/num ps=%d/%d\n",
-		          old_total_ps, old_num_ps, total_ps, num_ps);
+			old_total_ps, old_num_ps, total_ps, num_ps);
 	}
 
 	old_num_ps = num_ps;
@@ -408,9 +414,9 @@ static void get_power_supplies (void)
 	g_free (battery_path); battery_path = NULL;
 	g_free (ac_path); ac_path = NULL;
 
-	estimation_needed             = FALSE;
+	estimation_needed	= FALSE;
 	estimation_remaining_capacity = -1;
-	estimation_time               = -1;
+	estimation_time	= -1;
 	if (estimation_timer != NULL) {
 		g_timer_stop (estimation_timer);
 		g_timer_destroy (estimation_timer);
@@ -429,7 +435,7 @@ static void get_power_supplies (void)
 
 				/* process battery */
 				if (g_str_has_prefix (sysattr_value, "Battery") == TRUE &&
-				    get_battery_present (path, NULL) == TRUE) {
+					get_battery_present (path, NULL) == TRUE) {
 					if (configuration.list_power_supplies == TRUE) {
 						gchar *power_supply_id = g_path_get_basename (path);
 						g_print (_("type: %-*.*s\tid: %-*.*s\tpath: %s\n"), 12, 12, _("Battery"), 12, 12, power_supply_id, path);
@@ -438,14 +444,14 @@ static void get_power_supplies (void)
 
 					if ((battery_path == NULL && g_str_has_prefix (file, "hid") == FALSE) || file == g_strdup("BAT0")) {
 						if (battery_suffix == NULL ||
-						    g_str_has_suffix (path, battery_suffix) == TRUE) {
+							g_str_has_suffix (path, battery_suffix) == TRUE) {
 							battery_path = g_strdup (path);
 							battery_file = g_strdup (file);
 							/* workaround for limited/bugged batteries/drivers */
-							/* that don't provide current rate                 */
+							/* that don't provide current rate	*/
 
 							if (get_battery_current_rate (FALSE, NULL) == FALSE &&
-							    get_battery_current_rate (TRUE, NULL) == FALSE) {
+								get_battery_current_rate (TRUE, NULL) == FALSE) {
 								estimation_needed = TRUE;
 								estimation_timer = g_timer_new ();
 
@@ -464,7 +470,7 @@ static void get_power_supplies (void)
 				/* process AC */
 
 				if (g_str_has_prefix (sysattr_value, "Mains") == TRUE &&
-				    get_ac_online (path, NULL) == TRUE) {
+					get_ac_online (path, NULL) == TRUE) {
 					if (configuration.list_power_supplies == TRUE) {
 						gchar *power_supply_id = g_path_get_basename (path);
 						g_print (_("type: %-*.*s\tid: %-*.*s\tpath: %s\n"), 12, 12, _("AC"), 12, 12, power_supply_id, path);
@@ -784,7 +790,7 @@ static gboolean get_battery_time_estimation (gdouble remaining_capacity, gdouble
 		*time = (gint)(estimation_seconds / 60.0);
 
 		estimation_remaining_capacity = remaining_capacity;
-		estimation_time               = *time;
+		estimation_time	= *time;
 		g_timer_start (estimation_timer);
 	} else {
 		*time = estimation_time;
@@ -796,7 +802,7 @@ static gboolean get_battery_time_estimation (gdouble remaining_capacity, gdouble
 static void reset_battery_time_estimation (void)
 {
 	estimation_remaining_capacity = -1;
-	estimation_time               = -1;
+	estimation_time	= -1;
 	g_timer_start (estimation_timer);
 }
 
@@ -810,7 +816,7 @@ static void create_tray_icon(void)
 	tray_icon->name = g_strdup("");
 	tray_icon->size = 0;
 
-    #ifdef WITH_APPINDICATOR
+	#ifdef WITH_APPINDICATOR
 
 	tray_icon->app_indicator = app_indicator_new(
 		"battery-low",
@@ -839,14 +845,14 @@ static void create_tray_icon(void)
 	app_indicator_set_status(tray_icon->app_indicator, APP_INDICATOR_STATUS_ACTIVE);
 	app_indicator_set_attention_icon(tray_icon->app_indicator, "icon-name-attention");
 
-    #else
+	#else
 	tray_icon->gtk_icon = gtk_status_icon_new();
 	gtk_status_icon_set_tooltip_text(tray_icon->gtk_icon, BATTICONPLUS_STRING);
 	gtk_status_icon_set_visible(tray_icon->gtk_icon, TRUE);
 
 	g_signal_connect (G_OBJECT (tray_icon->gtk_icon), "activate", G_CALLBACK (on_tray_icon_click), NULL);
 	g_signal_connect (G_OBJECT (tray_icon->gtk_icon), "size-changed", G_CALLBACK (resize_tray_icon), (gpointer)tray_icon);
-    #endif
+	#endif
 
 	update_tray_icon(tray_icon);
 	g_timeout_add_seconds(configuration.update_interval, (GSourceFunc)update_tray_icon, (gpointer)tray_icon);
@@ -854,13 +860,13 @@ static void create_tray_icon(void)
 
 static void set_tray_icon (struct icon *tray_icon, const gchar *name)
 {
-    #ifdef WITH_APPINDICATOR
+	#ifdef WITH_APPINDICATOR
 	if (name != NULL) {
 		g_free(tray_icon->name);
 		tray_icon->name = g_strdup(name);
 	}
 	app_indicator_set_icon_full(tray_icon->app_indicator, tray_icon->name, "");
-    #else
+	#else
 	gint size = gtk_status_icon_get_size(tray_icon->gtk_icon);
 
 	if (size == tray_icon->size && (name == NULL || g_strcmp0 (name, tray_icon->name) == 0)) {
@@ -875,12 +881,12 @@ static void set_tray_icon (struct icon *tray_icon, const gchar *name)
 	}
 
 	GdkPixbuf *pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default(),
-	                                           tray_icon->name,
-	                                           tray_icon->size,
-	                                           GTK_ICON_LOOKUP_USE_BUILTIN,
-	                                           NULL);
+		tray_icon->name,
+		tray_icon->size,
+		GTK_ICON_LOOKUP_USE_BUILTIN,
+		NULL);
 	gtk_status_icon_set_from_pixbuf (tray_icon->gtk_icon, pix);
-    #endif
+	#endif
 }
 
 #ifndef WITH_APPINDICATOR
@@ -908,20 +914,20 @@ static void update_tray_icon_status (struct icon *tray_icon)
 	GError *error = NULL;
 
 	gboolean battery_present = FALSE;
-	gboolean ac_online       = FALSE;
+	gboolean ac_online	= FALSE;
 
-	gint battery_status            = -1;
+	gint battery_status	= -1;
 	static gint old_battery_status = -1;
 
-	/* battery statuses:                                      */
-	/* not present => ac_only, battery_missing                */
-	/* present     => charging, charged, discharging, unknown */
-	/* (present and not present are exclusive)                */
+	/* battery statuses:	*/
+	/* not present => ac_only, battery_missing	*/
+	/* present	=> charging, charged, discharging, unknown */
+	/* (present and not present are exclusive)	*/
 
-	static gboolean ac_only                = FALSE;
-	static gboolean battery_low            = FALSE;
-	static gboolean battery_critical       = FALSE;
-	static gboolean spawn_command_low      = FALSE;
+	static gboolean ac_only	= FALSE;
+	static gboolean battery_low	= FALSE;
+	static gboolean battery_critical	= FALSE;
+	static gboolean spawn_command_low	= FALSE;
 	static gboolean spawn_command_critical = FALSE;
 
 	gint percentage, time;
@@ -940,10 +946,10 @@ static void update_tray_icon_status (struct icon *tray_icon)
 
 		old_battery_status = -1;
 
-		ac_only                = FALSE;
-		battery_low            = FALSE;
-		battery_critical       = FALSE;
-		spawn_command_low      = FALSE;
+		ac_only	= FALSE;
+		battery_low	= FALSE;
+		battery_critical	= FALSE;
+		spawn_command_low	= FALSE;
 		spawn_command_critical = FALSE;
 	}
 
@@ -955,11 +961,11 @@ static void update_tray_icon_status (struct icon *tray_icon)
 
 			NOTIFY_MESSAGE (&notification, _("AC only, no battery!"), NULL, icon, NOTIFY_EXPIRES_NEVER, NOTIFY_URGENCY_NORMAL);
 
-	    #ifdef WITH_APPINDICATOR
+		#ifdef WITH_APPINDICATOR
 			app_indicator_set_title(tray_icon->app_indicator, _("AC only, no battery!"));
-	    #else
+		#else
 			gtk_status_icon_set_tooltip_text(tray_icon->gtk_icon, _("AC only, no battery!"));
-	    #endif
+		#endif
 
 			set_tray_icon(tray_icon, "ac-adapter");
 		}
@@ -980,7 +986,7 @@ static void update_tray_icon_status (struct icon *tray_icon)
 		}
 
 		/* workaround for limited/bugged batteries/drivers */
-		/* that unduly return unknown status               */
+		/* that unduly return unknown status	*/
 
 		if (battery_status == UNKNOWN && get_ac_online (ac_path, &ac_online) == TRUE) {
 			if (ac_online == TRUE) {
@@ -995,39 +1001,39 @@ static void update_tray_icon_status (struct icon *tray_icon)
 		}
 	}
 
-    #ifdef WITH_APPINDICATOR
-	#define HANDLE_BATTERY_STATUS(PCT,TIM,EXP,URG)                                                          \
-                                                                                                                \
-		percentage = PCT;                                                                               \
-                                                                                                                \
-		battery_string = get_battery_string (battery_status, percentage);                               \
-		time_string    = get_time_string (TIM);                                                         \
-                                                                                                                \
-		if (old_battery_status != battery_status) {                                                     \
-			old_battery_status  = battery_status;                                                       \
-			NOTIFY_MESSAGE (&notification, battery_string, time_string, icon, EXP, URG);                      \
-		}                                                                                               \
-                                                                                                                \
-		app_indicator_set_title(tray_icon->app_indicator, get_tooltip_string(battery_string, time_string)); \
+	#ifdef WITH_APPINDICATOR
+	#define HANDLE_BATTERY_STATUS(PCT,TIM,EXP,URG)																	\
+																													\
+		percentage = PCT;																							\
+																													\
+		battery_string = get_battery_string (battery_status, percentage);											\
+		time_string	= get_time_string (TIM);																		\
+																													\
+		if (old_battery_status != battery_status) {																	\
+			old_battery_status	= battery_status;																	\
+			NOTIFY_MESSAGE (&notification, battery_string, time_string, icon, EXP, URG);							\
+		}																											\
+																													\
+		app_indicator_set_title(tray_icon->app_indicator, get_tooltip_string(battery_string, time_string));			\
 		set_tray_icon (tray_icon, get_icon_name (battery_status, percentage));
-    #else
-	#define HANDLE_BATTERY_STATUS(PCT,TIM,EXP,URG)                                                          \
-                                                                                                                \
-		percentage = PCT;                                                                               \
-                                                                                                                \
-		battery_string = get_battery_string (battery_status, percentage);                               \
-		time_string    = get_time_string (TIM);                                                         \
-                                                                                                                \
-		if (old_battery_status != battery_status) {                                                     \
-	        if (old_battery_status != -1 || configuration.disable_startup_notify == FALSE)              \
-                NOTIFY_MESSAGE (&notification, battery_string, time_string, icon, EXP, URG);    \
-			old_battery_status  = battery_status;                                                       \
-			NOTIFY_MESSAGE (&notification, battery_string, time_string, icon, EXP, URG);                      \
-		}                                                                                               \
-                                                                                                                \
-		gtk_status_icon_set_tooltip_text (tray_icon->gtk_icon, get_tooltip_string (battery_string, time_string)); \
+	#else
+	#define HANDLE_BATTERY_STATUS(PCT,TIM,EXP,URG)																	\
+																													\
+		percentage = PCT;																							\
+																													\
+		battery_string = get_battery_string (battery_status, percentage);											\
+		time_string	= get_time_string (TIM);																		\
+																													\
+		if (old_battery_status != battery_status) {																	\
+		if (old_battery_status != -1 || configuration.disable_startup_notify == FALSE)								\
+	NOTIFY_MESSAGE (&notification, battery_string, time_string, icon, EXP, URG);									\
+			old_battery_status	= battery_status;																	\
+			NOTIFY_MESSAGE (&notification, battery_string, time_string, icon, EXP, URG);							\
+		}																											\
+																													\
+		gtk_status_icon_set_tooltip_text (tray_icon->gtk_icon, get_tooltip_string (battery_string, time_string));	\
 		set_tray_icon (tray_icon, get_icon_name (battery_status, percentage));
-    #endif
+	#endif
 
 	switch (battery_status) {
 	case MISSING:
@@ -1051,6 +1057,18 @@ static void update_tray_icon_status (struct icon *tray_icon)
 			return;
 		}
 
+		if (configuration.charge_reached_notify == TRUE) {
+			if (percentage >= DEFAULT_CHARGE_LEVEL && charge_reached_notify_sent == FALSE) {
+	 			battery_string = get_battery_string (CHARGE_LEVEL, percentage);
+				NOTIFY_MESSAGE (&notification, battery_string, '\0', icon, NOTIFY_EXPIRES_NEVER, NOTIFY_URGENCY_NORMAL);
+				charge_reached_notify_sent = TRUE;
+			} else {
+				if (percentage < DEFAULT_CHARGE_LEVEL && charge_reached_notify_sent == TRUE) {
+					charge_reached_notify_sent = FALSE;
+				}
+			}
+		}
+
 		HANDLE_BATTERY_STATUS (percentage, time, NOTIFY_EXPIRES_DEFAULT, NOTIFY_URGENCY_NORMAL)
 		break;
 
@@ -1069,17 +1087,17 @@ static void update_tray_icon_status (struct icon *tray_icon)
 		if (battery_status == NOTCHARGING) {
 			time_string = '\0';
 		} else {
-			time_string    = get_time_string (time);
+			time_string	= get_time_string (time);
 		}
 
 		if (old_battery_status != DISCHARGING) {
 			if (old_battery_status != -1 || configuration.disable_startup_notify == FALSE)
-			    NOTIFY_MESSAGE (&notification, battery_string, time_string, icon, NOTIFY_EXPIRES_DEFAULT, NOTIFY_URGENCY_NORMAL);
-			old_battery_status  = DISCHARGING;
+				NOTIFY_MESSAGE (&notification, battery_string, time_string, icon, NOTIFY_EXPIRES_DEFAULT, NOTIFY_URGENCY_NORMAL);
+			old_battery_status	= DISCHARGING;
 
-			battery_low            = FALSE;
-			battery_critical       = FALSE;
-			spawn_command_low      = FALSE;
+			battery_low	= FALSE;
+			battery_critical	= FALSE;
+			spawn_command_low	= FALSE;
 			spawn_command_critical = FALSE;
 		}
 
@@ -1101,13 +1119,13 @@ static void update_tray_icon_status (struct icon *tray_icon)
 			spawn_command_critical = TRUE;
 		}
 
-	    #ifdef WITH_APPINDICATOR
+		#ifdef WITH_APPINDICATOR
 		app_indicator_set_title(tray_icon->app_indicator, get_tooltip_string(battery_string, time_string));
 		app_indicator_set_icon_full(tray_icon->app_indicator, get_icon_name(battery_status, percentage), "");
-	    #else
+		#else
 		gtk_status_icon_set_tooltip_text(tray_icon->gtk_icon, get_tooltip_string(battery_string, time_string));
 		set_tray_icon(tray_icon, get_icon_name(battery_status, percentage));
-	    #endif
+		#endif
 
 		if (spawn_command_low == TRUE) {
 			spawn_command_low = FALSE;
@@ -1179,10 +1197,10 @@ static void on_tray_icon_click(GtkStatusIcon *gtk_icon, gpointer user_data)
 			g_error_free(error);
 			error = NULL;
 
-	    #ifdef WITH_NOTIFY
+		#ifdef WITH_NOTIFY
 			static NotifyNotification *spawn_notification = NULL;
 			NOTIFY_MESSAGE(&spawn_notification, _("Cannot spawn left click command!"), configuration.command_left_click, NULL, NOTIFY_EXPIRES_DEFAULT, NOTIFY_URGENCY_CRITICAL);
-	    #endif
+		#endif
 		}
 	}
 }
@@ -1294,6 +1312,10 @@ static gchar* get_battery_string (gint state, gint percentage)
 		g_snprintf (battery_string, STR_LTH, _("Battery is charging (%i%%)"), percentage);
 		break;
 
+	case CHARGE_LEVEL:
+		g_snprintf (battery_string, STR_LTH, _("Battery level is at %i%% percent"), percentage);
+		break;
+
 	default:
 		battery_string[0] = '\0';
 		break;
@@ -1312,7 +1334,7 @@ static gchar* get_time_string (gint minutes)
 		return NULL;
 	}
 
-	hours   = minutes / 60;
+	hours	= minutes / 60;
 	minutes = minutes % 60;
 
 	if (hours > 0) {
@@ -1347,27 +1369,27 @@ static gchar* get_icon_name (gint state, gint percentage)
 		}
 	} else {
 		if (configuration.icon_type == BATTERY_ICON_NOTIFICATION) {
-			if (percentage <= 10)  g_strlcat (icon_name, "-010", STR_LTH);
-			else if (percentage <= 20)  g_strlcat (icon_name, "-020", STR_LTH);
-			else if (percentage <= 30)  g_strlcat (icon_name, "-030", STR_LTH);
-			else if (percentage <= 40)  g_strlcat (icon_name, "-040", STR_LTH);
-			else if (percentage <= 50)  g_strlcat (icon_name, "-050", STR_LTH);
-			else if (percentage <= 60)  g_strlcat (icon_name, "-060", STR_LTH);
-			else if (percentage <= 70)  g_strlcat (icon_name, "-070", STR_LTH);
-			else if (percentage <= 80)  g_strlcat (icon_name, "-080", STR_LTH);
-			else if (percentage <= 90)  g_strlcat (icon_name, "-090", STR_LTH);
+			if (percentage <= 10)	g_strlcat (icon_name, "-010", STR_LTH);
+			else if (percentage <= 20)	g_strlcat (icon_name, "-020", STR_LTH);
+			else if (percentage <= 30)	g_strlcat (icon_name, "-030", STR_LTH);
+			else if (percentage <= 40)	g_strlcat (icon_name, "-040", STR_LTH);
+			else if (percentage <= 50)	g_strlcat (icon_name, "-050", STR_LTH);
+			else if (percentage <= 60)	g_strlcat (icon_name, "-060", STR_LTH);
+			else if (percentage <= 70)	g_strlcat (icon_name, "-070", STR_LTH);
+			else if (percentage <= 80)	g_strlcat (icon_name, "-080", STR_LTH);
+			else if (percentage <= 90)	g_strlcat (icon_name, "-090", STR_LTH);
 			else g_strlcat (icon_name, "-100", STR_LTH);
 
 			if (state == CHARGING) g_strlcat (icon_name, "-plugged", STR_LTH);
-			else if (state == CHARGED)  g_strlcat (icon_name, "-plugged", STR_LTH);
+			else if (state == CHARGED)	g_strlcat (icon_name, "-plugged", STR_LTH);
 		} else {
-			if (percentage <= 20)  g_strlcat (icon_name, "-caution", STR_LTH);
-			else if (percentage <= 40)  g_strlcat (icon_name, "-low", STR_LTH);
-			else if (percentage <= 80)  g_strlcat (icon_name, "-good", STR_LTH);
+			if (percentage <= 20)	g_strlcat (icon_name, "-caution", STR_LTH);
+			else if (percentage <= 40)	g_strlcat (icon_name, "-low", STR_LTH);
+			else if (percentage <= 80)	g_strlcat (icon_name, "-good", STR_LTH);
 			else g_strlcat (icon_name, "-full", STR_LTH);
 
 			if (state == CHARGING) g_strlcat (icon_name, "-charging", STR_LTH);
-			else if (state == CHARGED)  g_strlcat (icon_name, "-charged", STR_LTH);
+			else if (state == CHARGED)	g_strlcat (icon_name, "-charged", STR_LTH);
 		}
 	}
 
