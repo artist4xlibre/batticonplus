@@ -24,7 +24,7 @@
  */
 
 #define BATTICONPLUS_VERSION_NUMBER 2.0
-#define BATTICONPLUS_VERSION_STRING "2.0.0"
+#define BATTICONPLUS_VERSION_STRING "2.0.1"
 #define BATTICONPLUS_STRING	"batticonplus"
 
 #include <glib.h>

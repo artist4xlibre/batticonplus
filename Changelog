@@ -1,5 +1,12 @@
+2025-10-04  Carlo den Otter
+
+ - Added full NL dutch translation
+ - Added feature to warn when charging and level reached 80%
+
+
 2025-09-28  Carlo den Otter
 
+ - Cloned from cbatticon.
  - Added battery name to systray icon tooltip.
  - Added icon theme and notification support (thx Bing Liu).
  - Use battery BAT0 by default, if available.
@@ -11,6 +18,5 @@
     (thx Zariep).
  - Added option to disable charge notification on startup (thx Drew Abbott).
  - Added application desktop file and icon.
- - Install README.md and Changelog files.
- - Added partial NL dutch translation.
+ - Install README.md and Changelog files
 
