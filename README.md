@@ -53,6 +53,10 @@ settings in which case e.g. the displayed maximum capacity can be 80% or lower.
 `  battery id             : BAT0, if present`\
 `                           (check available power sources with --list-power-supplies)`
 
+`Tray icon click actions:`\
+`  middle : Exit batticonplus`\
+`  right  : Show batticonplus version`
+
 `Examples:`\
 `  batticonplus`\
 `  batticonplus -t`\

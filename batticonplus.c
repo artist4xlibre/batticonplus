@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2011-2013 Colin Jones
- * Copyright (C) 2014-2023 Valère Monseur
- * Copyright (C) 2025	Carlo den Otter
+ * Copyright (C) 2011-2013	Colin Jones
+ * Copyright (C) 2014-2023	Valère Monseur
+ * Copyright (C) 2025		Carlo den Otter
  *
  * Based on code by Matteo Marchesotti
  * Copyright (C) 2007 Matteo Marchesotti <matteo.marchesotti@fsfe.org>
@@ -24,7 +24,7 @@
  */
 
 #define BATTICONPLUS_VERSION_NUMBER 2.0
-#define BATTICONPLUS_VERSION_STRING "2.0.1"
+#define BATTICONPLUS_VERSION_STRING "2.0.2"
 #define BATTICONPLUS_STRING	"batticonplus"
 
 #include <glib.h>
@@ -150,7 +150,7 @@ static gboolean resize_tray_icon (GtkStatusIcon *gtk_icon, gint size, struct ico
 #endif
 static gboolean update_tray_icon (struct icon *tray_icon);
 static void update_tray_icon_status (struct icon *tray_icon);
-static void on_tray_icon_click(GtkStatusIcon *gtk_icon, gpointer user_data);
+static void on_tray_icon_click(GtkStatusIcon *gtk_icon, GdkEventButton *event, gpointer userdata);
 
 #ifdef WITH_NOTIFY
 static void notify_message (NotifyNotification **notification, gchar *summary, gchar *body, gchar *icon, gint timeout, NotifyUrgency urgency);
@@ -170,20 +170,15 @@ static gchar *battery_path	= NULL;
 static gchar *battery_file	= NULL;
 static gchar *ac_path	= NULL;
 
-/*
- * workaround for limited/bugged batteries/drivers that don't provide current rate
- * the next 4 variables are used to calculate estimated time
- */
+// workaround for limited/bugged batteries/drivers that don't provide current rate
+// the next 4 variables are used to calculate estimated time
 
 static gboolean estimation_needed	= FALSE;
 static gdouble estimation_remaining_capacity = -1;
 static gint estimation_time	= -1;
 static GTimer	*estimation_timer	= NULL;
-static gboolean charge_reached_notify_sent	= FALSE;
 
-/*
- * command line options function
- */
+static gboolean charge_reached_notify_sent	= FALSE;
 
 GtkIconTheme* set_custom_icon_theme(const char *theme_name, GError **error) {
 	GtkIconTheme *theme = gtk_icon_theme_new();
@@ -345,10 +340,6 @@ static gint get_options (int argc, char **argv)
 
 	return 1;
 }
-
-/*
- * sysfs functions
- */
 
 static gboolean changed_power_supplies (void)
 {
@@ -850,7 +841,7 @@ static void create_tray_icon(void)
 	gtk_status_icon_set_tooltip_text(tray_icon->gtk_icon, BATTICONPLUS_STRING);
 	gtk_status_icon_set_visible(tray_icon->gtk_icon, TRUE);
 
-	g_signal_connect (G_OBJECT (tray_icon->gtk_icon), "activate", G_CALLBACK (on_tray_icon_click), NULL);
+	g_signal_connect (G_OBJECT (tray_icon->gtk_icon), "button-press-event", G_CALLBACK (on_tray_icon_click), NULL);
 	g_signal_connect (G_OBJECT (tray_icon->gtk_icon), "size-changed", G_CALLBACK (resize_tray_icon), (gpointer)tray_icon);
 	#endif
 
@@ -1186,11 +1177,12 @@ static void update_tray_icon_status (struct icon *tray_icon)
 	}
 }
 
-static void on_tray_icon_click(GtkStatusIcon *gtk_icon, gpointer user_data)
+static void on_tray_icon_click(GtkStatusIcon *gtk_icon, GdkEventButton *event, gpointer userdata)
 {
 	GError *error = NULL;
 
-	if (configuration.command_left_click != NULL) {
+	if (event->type == GDK_BUTTON_PRESS && event->button == 1 && configuration.command_left_click != NULL)
+	{
 		if (g_spawn_command_line_async(configuration.command_left_click, &error) == FALSE) {
 			syslog(LOG_ERR, _("Cannot spawn left click command: %s\n"), error->message);
 			g_printerr(_("Cannot spawn left click command: %s\n"), error->message);
@@ -1202,6 +1194,22 @@ static void on_tray_icon_click(GtkStatusIcon *gtk_icon, gpointer user_data)
 			NOTIFY_MESSAGE(&spawn_notification, _("Cannot spawn left click command!"), configuration.command_left_click, NULL, NOTIFY_EXPIRES_DEFAULT, NOTIFY_URGENCY_CRITICAL);
 		#endif
 		}
+	}
+
+	if (event->type == GDK_BUTTON_PRESS && event->button == 2)
+	{
+		exit(0);
+	}
+
+	if (event->type == GDK_BUTTON_PRESS && event->button == 3)
+	{
+ 		#ifdef WITH_NOTIFY
+			static NotifyNotification *notification = NULL;
+			static gchar *tooltip_version = NULL;
+			tooltip_version = g_strdup("Batticonplus version: ");
+			g_strlcat (tooltip_version, BATTICONPLUS_VERSION_STRING, STR_LTH);
+			NOTIFY_MESSAGE (&notification, _(tooltip_version), NULL, NULL, NOTIFY_EXPIRES_DEFAULT, NOTIFY_URGENCY_NORMAL);
+		#endif
 	}
 }
 
@@ -1460,3 +1468,4 @@ int main (int argc, char **argv)
 	return 0;
 }
 
+// vim: ts=4 sw=4 et:
