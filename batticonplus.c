@@ -85,12 +85,13 @@ struct configuration {
 	gchar	*command_left_click;
 #ifdef WITH_NOTIFY
 	gboolean hide_notification;
+	gboolean disable_startup_notify;
+	gboolean charge_reached_notify;
+	gboolean version_notification_shown;
 #endif
 	gboolean list_icon_types;
 	gchar	*icon_theme_name;
 	gboolean list_power_supplies;
-	gboolean disable_startup_notify;
-	gboolean charge_reached_notify;
 } configuration = {
 	FALSE,
 	FALSE,
@@ -103,11 +104,12 @@ struct configuration {
 	NULL,
 #ifdef WITH_NOTIFY
 	FALSE,
+	FALSE,
+	FALSE,
+	FALSE,
 #endif
 	FALSE,
 	NULL,
-	FALSE,
-	FALSE,
 	FALSE,
 };
 
@@ -166,19 +168,20 @@ static gchar* get_icon_name (gint state, gint percentage);
 gchar* get_icon_path_from_theme(const gchar *theme_name, const gchar *icon_name);
 
 static gchar *battery_suffix = NULL;
-static gchar *battery_path	= NULL;
-static gchar *battery_file	= NULL;
-static gchar *ac_path	= NULL;
+static gchar *battery_path = NULL;
+static gchar *battery_file = NULL;
+static gchar *ac_path = NULL;
 
 // workaround for limited/bugged batteries/drivers that don't provide current rate
 // the next 4 variables are used to calculate estimated time
 
-static gboolean estimation_needed	= FALSE;
+static gboolean estimation_needed = FALSE;
 static gdouble estimation_remaining_capacity = -1;
 static gint estimation_time	= -1;
-static GTimer	*estimation_timer	= NULL;
+static GTimer	*estimation_timer = NULL;
 
-static gboolean charge_reached_notify_sent	= FALSE;
+static gboolean charge_reached_notify_sent = FALSE;
+static gboolean version_notification_shown = FALSE;
 
 GtkIconTheme* set_custom_icon_theme(const char *theme_name, GError **error) {
 	GtkIconTheme *theme = gtk_icon_theme_new();
@@ -224,8 +227,8 @@ static gint get_options (int argc, char **argv)
 		{ "list-icon-types", 't', 0, G_OPTION_ARG_NONE, &configuration.list_icon_types, N_("List available icon types"), NULL },
 		{ "icon-theme-name", 'I', 0, G_OPTION_ARG_STRING, &configuration.icon_theme_name, N_("Use custom icon theme by name"), NULL },
 		{ "list-power-supplies", 'p', 0, G_OPTION_ARG_NONE, &configuration.list_power_supplies, N_("List available power supplies (battery and AC)"), NULL },
-	{ "disable-startup-notify", 's', 0, G_OPTION_ARG_NONE	, &configuration.disable_startup_notify, N_("Suppress the startup notification"), NULL },
-		{ "charge-reached-notify", 'w', 0, G_OPTION_ARG_NONE, &configuration.charge_reached_notify, N_("Warn when chargng and level reached"), NULL },
+    	{ "disable-startup-notify", 's', 0, G_OPTION_ARG_NONE, &configuration.disable_startup_notify, N_("Suppress the startup notification"), NULL },
+		{ "charge-reached-notify", 'w', 0, G_OPTION_ARG_NONE, &configuration.charge_reached_notify, N_("Warn when charging and level reached"), NULL },
 		{ NULL }
 	};
 
@@ -1181,8 +1184,7 @@ static void on_tray_icon_click(GtkStatusIcon *gtk_icon, GdkEventButton *event, g
 {
 	GError *error = NULL;
 
-	if (event->type == GDK_BUTTON_PRESS && event->button == 1 && configuration.command_left_click != NULL)
-	{
+	if (event->type == GDK_BUTTON_PRESS && event->button == 1 && configuration.command_left_click != NULL) {
 		if (g_spawn_command_line_async(configuration.command_left_click, &error) == FALSE) {
 			syslog(LOG_ERR, _("Cannot spawn left click command: %s\n"), error->message);
 			g_printerr(_("Cannot spawn left click command: %s\n"), error->message);
@@ -1196,20 +1198,17 @@ static void on_tray_icon_click(GtkStatusIcon *gtk_icon, GdkEventButton *event, g
 		}
 	}
 
-	if (event->type == GDK_BUTTON_PRESS && event->button == 2)
-	{
+	if (event->type == GDK_BUTTON_PRESS && event->button == 2) {
 		exit(0);
 	}
 
-	if (event->type == GDK_BUTTON_PRESS && event->button == 3)
-	{
- 		#ifdef WITH_NOTIFY
-			static NotifyNotification *notification = NULL;
-			static gchar *tooltip_version = NULL;
-			tooltip_version = g_strdup("Batticonplus version: ");
-			g_strlcat (tooltip_version, BATTICONPLUS_VERSION_STRING, STR_LTH);
-			NOTIFY_MESSAGE (&notification, _(tooltip_version), NULL, NULL, NOTIFY_EXPIRES_DEFAULT, NOTIFY_URGENCY_NORMAL);
-		#endif
+	if (event->type == GDK_BUTTON_PRESS && event->button == 3 && version_notification_shown == FALSE) {
+		version_notification_shown = TRUE;
+		static NotifyNotification *notification = NULL;
+		static gchar *tooltip_version = NULL;
+		tooltip_version = g_strdup("Batticonplus version: ");
+		g_strlcat (tooltip_version, BATTICONPLUS_VERSION_STRING, STR_LTH);
+		NOTIFY_MESSAGE (&notification, _(tooltip_version), NULL, NULL, NOTIFY_EXPIRES_DEFAULT, NOTIFY_URGENCY_NORMAL);
 	}
 }
 
