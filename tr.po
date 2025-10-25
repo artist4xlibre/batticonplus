@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: batticonplus 1.6.7\n"
-"Report-Msgid-Bugs-To: valere.monseur@ymail.com\n"
-"POT-Creation-Date: 2015-07-17 20:38+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-17 14:43+0200\n"
 "PO-Revision-Date: 2018-04-08 23:30+0100\n"
 "Last-Translator: Behzat Erte <behzaterte@yandex.com>\n"
 "Language-Team: TR <behzaterte@yandex.com>\n"
@@ -19,217 +19,276 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: batticonplus.c:154
+#: batticonplus.c:191
 msgid "Display the version"
 msgstr "Sürümü göster"
 
-#: batticonplus.c:155
+#: batticonplus.c:192
 msgid "Display debug information"
 msgstr "Hata ayıklama bilgisini göster"
 
-#: batticonplus.c:156
+#: batticonplus.c:193
 msgid "Set update interval (in seconds)"
 msgstr "Güncelleme sıklığını ayarla (saniye)"
 
-#: batticonplus.c:157
+#: batticonplus.c:194
 msgid "Set icon type ('standard', 'notification' or 'symbolic')"
 msgstr "Simge türünü ayarla ('standart', 'bildirim' ya da 'temsili')"
 
-#: batticonplus.c:158
+#: batticonplus.c:195
 msgid "Set low battery level (in percent)"
 msgstr "Düşük pil seviyesini ayarla (yüzde)"
 
-#: batticonplus.c:159
+#: batticonplus.c:196
 msgid "Set critical battery level (in percent)"
 msgstr "Kritik pil seviyesini ayarla (yüzde)"
 
-#: batticonplus.c:160
+#: batticonplus.c:197
+#, fuzzy
+msgid "Command to execute when low battery level is reached"
+msgstr "Krik seviyeye erişildiğinde komutu çalıştır"
+
+#: batticonplus.c:198
 msgid "Command to execute when critical battery level is reached"
 msgstr "Krik seviyeye erişildiğinde komutu çalıştır"
 
-#: batticonplus.c:161
+#: batticonplus.c:199
 msgid "Command to execute when left clicking on tray icon"
 msgstr "Simgeye sol tuş ile tıklandığında komutu çalıştır"
 
-#: batticonplus.c:163
+#: batticonplus.c:201
 msgid "Hide the notification popups"
 msgstr "Bildirim balonlarını gizle"
 
-#: batticonplus.c:165
+#: batticonplus.c:203
 msgid "List available icon types"
 msgstr "Kullanılabilir simge türlerini listele"
 
-#: batticonplus.c:166
+#: batticonplus.c:204
+msgid "Use custom icon theme by name"
+msgstr ""
+
+#: batticonplus.c:205
 msgid "List available power supplies (battery and AC)"
 msgstr "Kullanılabilir güç kaynaklarını listele (pil ve şebeke)"
 
-#: batticonplus.c:170
+#: batticonplus.c:209
 msgid "[BATTERY ID]"
 msgstr "[PİL ID]"
 
-#: batticonplus.c:174
+#: batticonplus.c:210
+msgid "Suppress the startup notification"
+msgstr "Başlangıç bildirimini bastır"
+
+#: batticonplus.c:211
+msgid "Warn when charging and level reached"
+msgstr "Şarj olurken ve seviyeye ulaşıldığında uyarı ver"
+
+#: batticonplus.c:213
 #, c-format
 msgid "Cannot parse command line arguments: %s\n"
 msgstr "Komut satırı değişkenleri ayrıştırılamıyor: %s\n"
 
-#: batticonplus.c:185
+#: batticonplus.c:224
 msgid ""
 "batticonplus: a lightweight and fast battery icon that sits in your system "
 "tray\n"
 msgstr "batticonplus: sistem çekmecesinde görünen küçük ve hızlı pil simgesi\n"
 
-#: batticonplus.c:186
+#: batticonplus.c:225
 #, c-format
 msgid "version %s\n"
 msgstr "sürüm %s\n"
 
-#: batticonplus.c:194
+#: batticonplus.c:233
 msgid "List of available power supplies:\n"
 msgstr "Uygun güç kaynaklarının listesi:\n"
 
-#: batticonplus.c:209
+#: batticonplus.c:248
+#, fuzzy, c-format
+msgid "Cannot use icon theme %s: %s\n"
+msgstr "Komut satırı değişkenleri ayrıştırılamıyor: %s\n"
+
+#: batticonplus.c:261
 msgid "List of available icon types:\n"
 msgstr "Uygun simge türlerinin listesi:\n"
 
-#: batticonplus.c:210 batticonplus.c:211 batticonplus.c:212
+#: batticonplus.c:262 batticonplus.c:263 batticonplus.c:264
 msgid "available"
 msgstr "uygun"
 
-#: batticonplus.c:210 batticonplus.c:211 batticonplus.c:212 batticonplus.c:540
-#: batticonplus.c:548 batticonplus.c:570
+#: batticonplus.c:262 batticonplus.c:263 batticonplus.c:264
 msgid "unavailable"
 msgstr "uygun değil"
 
-#: batticonplus.c:226
+#: batticonplus.c:278
 #, c-format
 msgid "Unknown icon type: %s\n"
 msgstr "Bilinmeyen simge türü: %s\n"
 
-#: batticonplus.c:238
+#: batticonplus.c:290
 msgid "No icon type found!\n"
 msgstr "Hiç simge türü bulunamadı!\n"
 
-#: batticonplus.c:245
+#: batticonplus.c:297
 #, c-format
 msgid "Invalid update interval! It has been reset to default (%d seconds)\n"
 msgstr "Geçersiz güncelleme aralığı! Varsayılan ayarlara dönecek (%d saniye)\n"
 
-#: batticonplus.c:252
+#: batticonplus.c:304
 #, c-format
 msgid "Invalid low level! It has been reset to default (%d percent)\n"
 msgstr "Geçersiz alt seviye! Varsayılan ayarlara dönecek (yüzde %d)\n"
 
-#: batticonplus.c:257
+#: batticonplus.c:309
 #, c-format
 msgid "Invalid critical level! It has been reset to default (%d percent)\n"
 msgstr "Geçersiz kritik seviye! Varsayılan ayarlara dönecek (yüzde %d)\n"
 
-#: batticonplus.c:263
+#: batticonplus.c:315
 msgid ""
 "Critical level is higher than low level! They have been reset to default\n"
 msgstr ""
 "Kritik seviye alt seviyeden yüksek! Varsayılan ayarlarına döndürülecekler\n"
 
-#: batticonplus.c:294 batticonplus.c:326
+#: batticonplus.c:409 batticonplus.c:444
 #, c-format
 msgid "type: %-*.*s\tid: %-*.*s\tpath: %s\n"
 msgstr "tür: %-*.*s\tid: %-*.*s\tyol: %s\n"
 
-#: batticonplus.c:294
+#: batticonplus.c:409
 msgid "Battery"
 msgstr "Pil"
 
-#: batticonplus.c:326
+#: batticonplus.c:444
 msgid "AC"
 msgstr "Şebeke"
 
-#: batticonplus.c:348
+#: batticonplus.c:466
 #, c-format
 msgid "Cannot open sysfs directory: %s (%s)\n"
 msgstr "sysfs klasörü açılamıyor: %s (%s)\n"
 
-#: batticonplus.c:355
+#: batticonplus.c:473
 #, c-format
 msgid "No battery with suffix %s found!\n"
 msgstr "Pil ile eki %s bulunamadı!\n"
 
-#: batticonplus.c:360
+#: batticonplus.c:478
 msgid "No battery nor AC power supply found!\n"
 msgstr "Pil ya da şebeke güç ünitesi bulunamadı!\n"
 
-#: batticonplus.c:672 batticonplus.c:675
+#: batticonplus.c:827 batticonplus.c:829
 msgid "AC only, no battery!"
 msgstr "Sadece şebeke, pil yok!"
 
-#: batticonplus.c:793
+#: batticonplus.c:956
+#, fuzzy, c-format
+msgid "Spawning low battery level command in 5 seconds: %s"
+msgstr "Kritik pil seviyesi komutu 30 saniye içerisinde üretilecek: %s"
+
+#: batticonplus.c:961
+#, fuzzy
+msgid "Skipping low battery level command, no longer discharging"
+msgstr "Kritik pil seviyesi komutu 30 saniye içerisinde üretilecek: %s"
+
+#: batticonplus.c:967 batticonplus.c:969
+#, fuzzy, c-format
+msgid "Cannot spawn low battery level command: %s\n"
+msgstr "Kritik seviye komutu üretilemiyor: %s\n"
+
+#: batticonplus.c:974
+#, fuzzy
+msgid "Cannot spawn low battery level command!"
+msgstr "Kritik pil seviyesi komutu oluşturulamıyor!"
+
+#: batticonplus.c:984
 #, c-format
 msgid "Spawning critical battery level command in 30 seconds: %s"
 msgstr "Kritik pil seviyesi komutu 30 saniye içerisinde üretilecek: %s"
 
-#: batticonplus.c:797
+#: batticonplus.c:989
+#, fuzzy
+msgid "Skipping critical battery level command, no longer discharging"
+msgstr "Kritik pil seviyesi komutu 30 saniye içerisinde üretilecek: %s"
+
+#: batticonplus.c:995 batticonplus.c:997
 #, c-format
 msgid "Cannot spawn critical battery level command: %s\n"
 msgstr "Kritik seviye komutu üretilemiyor: %s\n"
 
-#: batticonplus.c:800
+#: batticonplus.c:1002
 msgid "Cannot spawn critical battery level command!"
 msgstr "Kritik pil seviyesi komutu oluşturulamıyor!"
 
-#: batticonplus.c:817
+#: batticonplus.c:1017 batticonplus.c:1019
 #, c-format
 msgid "Cannot spawn left click command: %s\n"
 msgstr "Sol tuş komutu üretilemiyor: %s\n"
 
-#: batticonplus.c:820
+#: batticonplus.c:1024
 msgid "Cannot spawn left click command!"
 msgstr "Sol tuş komutu oluşturulamıyor!"
 
-#: batticonplus.c:884
+#: batticonplus.c:1088
 msgid "Battery is missing!"
 msgstr "Pil kayıp!"
 
-#: batticonplus.c:888
+#: batticonplus.c:1092
 msgid "Battery status is unknown!"
 msgstr "Pil durumu bilinmiyor!"
 
-#: batticonplus.c:892
+#: batticonplus.c:1096
 msgid "Battery is charged!"
 msgstr "Pil dolduruldu!"
 
-#: batticonplus.c:896
+#: batticonplus.c:1100
+#, c-format
 msgid "Battery is discharging (%i%% remaining)"
 msgstr "Pil boşalıyor (%i%% kalan)"
 
-#: batticonplus.c:900
+#: batticonplus.c:1104
+#, c-format
 msgid "Battery is not charging (%i%% remaining)"
 msgstr "Pil doldurulmuyor (%i%% kalan)"
 
-#: batticonplus.c:904
+#: batticonplus.c:1108
+#, c-format
 msgid "Battery level is low! (%i%% remaining)"
 msgstr "Pil durumu düşük! (%i%% kalan)"
 
-#: batticonplus.c:908
+#: batticonplus.c:1112
+#, c-format
 msgid "Battery level is critical! (%i%% remaining)"
 msgstr "Pil kritik seviyede! (%i%% kalan)"
 
-#: batticonplus.c:912
+#: batticonplus.c:1116
+#, c-format
 msgid "Battery is charging (%i%%)"
 msgstr "Pil dolduruluyor (%i%%)"
 
-#: batticonplus.c:941
+#: batticonplus.c:1145
+#, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d dakika"
 msgstr[1] "%d dakika"
 
-#: batticonplus.c:942
+#: batticonplus.c:1146
+#, c-format
 msgid "%d hour, %s remaining"
 msgid_plural "%d hours, %s remaining"
 msgstr[0] "%d saat, %s kaldı"
 msgstr[1] "%d saat, %s kaldı"
 
-#: batticonplus.c:944
+#: batticonplus.c:1148
+#, c-format
 msgid "%d minute remaining"
 msgid_plural "%d minutes remaining"
 msgstr[0] "%d dakika kaldı"
 msgstr[1] "%d dakika kaldı"
+
+#: batticonplus.c:1271
+#, c-format
+msgid "Maximum Capacity: %i%%"
+msgstr ""

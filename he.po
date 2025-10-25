@@ -6,228 +6,289 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: batticonplus 1.6.7\n"
-"Report-Msgid-Bugs-To: valere.monseur@ymail.com\n"
-"POT-Creation-Date: 2015-07-17 20:38+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-17 14:43+0200\n"
 "PO-Revision-Date: 2018-04-08 23:49+0200\n"
 "Last-Translator: Valère Monseur <valere.monseur@ymail.com>\n"
 "Language-Team: N/A\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n!=1;\n"
 
-#: batticonplus.c:154
+#: batticonplus.c:191
 msgid "Display the version"
 msgstr "הצג את הגרסה"
 
-#: batticonplus.c:155
+#: batticonplus.c:192
 msgid "Display debug information"
 msgstr "הצגת מידע ניפוי-באגים"
 
-#: batticonplus.c:156
+#: batticonplus.c:193
 msgid "Set update interval (in seconds)"
 msgstr "הגדר מרווח עדכונים (בשניות)"
 
-#: batticonplus.c:157
+#: batticonplus.c:194
 msgid "Set icon type ('standard', 'notification' or 'symbolic')"
 msgstr "הגדר סוג אייקון (רגיל, התראה או סימבולי)"
 
-#: batticonplus.c:158
+#: batticonplus.c:195
 msgid "Set low battery level (in percent)"
 msgstr "הגדר מצב סוללה נמוכה (באחוזים)"
 
-#: batticonplus.c:159
+#: batticonplus.c:196
 msgid "Set critical battery level (in percent)"
 msgstr "הגדר מצב חירום לסוללה נמוכה קריטית (באחוזים)"
 
-#: batticonplus.c:160
+#: batticonplus.c:197
+#, fuzzy
+msgid "Command to execute when low battery level is reached"
+msgstr "פקודה לביצוע כאשר הסוללה מגיעה למצב קריטי"
+
+#: batticonplus.c:198
 msgid "Command to execute when critical battery level is reached"
 msgstr "פקודה לביצוע כאשר הסוללה מגיעה למצב קריטי"
 
-#: batticonplus.c:161
+#: batticonplus.c:199
 msgid "Command to execute when left clicking on tray icon"
 msgstr "פקודה לביצוע בלחיצה שמאלית על האייקון בשורת המשימות"
 
-#: batticonplus.c:163
+#: batticonplus.c:201
 msgid "Hide the notification popups"
 msgstr "העלם את חלוניות ההתראה הקופצות"
 
-#: batticonplus.c:165
+#: batticonplus.c:203
 msgid "List available icon types"
 msgstr "הצג את סוגי האייקונים האפשריים"
 
-#: batticonplus.c:166
+#: batticonplus.c:204
+msgid "Use custom icon theme by name"
+msgstr ""
+
+#: batticonplus.c:205
 msgid "List available power supplies (battery and AC)"
 msgstr "הצג את סוגי אספקת החשמל האפשריים (סוללה ו-AC)"
 
-#: batticonplus.c:170
+#: batticonplus.c:209
 msgid "[BATTERY ID]"
 msgstr "[מזהה סוללה]"
 
-#: batticonplus.c:174
+#: batticonplus.c:210
+msgid "Suppress the startup notification"
+msgstr "הסתר את הודעת ההפעלה"
+
+#: batticonplus.c:211
+msgid "Warn when charging and level reached"
+msgstr "התראה בעת טעינה והגעה לרמה"
+
+#: batticonplus.c:213
 #, c-format
 msgid "Cannot parse command line arguments: %s\n"
 msgstr "אין אפשרות לעבד את הפרמטר: %s\n"
 
-#: batticonplus.c:185
+#: batticonplus.c:224
 msgid ""
-"batticonplus: a lightweight and fast battery icon that sits in your system tray\n"
+"batticonplus: a lightweight and fast battery icon that sits in your system "
+"tray\n"
 msgstr "batticonplus: אייקון סוללה פשוט ומהיר שנמצא בשורת המשימות שלך \n"
 
-#: batticonplus.c:186
+#: batticonplus.c:225
 #, c-format
 msgid "version %s\n"
 msgstr "גרסה %s\n"
 
-#: batticonplus.c:194
+#: batticonplus.c:233
 msgid "List of available power supplies:\n"
 msgstr "רשימה של אספקות חשמל אפשריות:\n"
 
-#: batticonplus.c:209
+#: batticonplus.c:248
+#, fuzzy, c-format
+msgid "Cannot use icon theme %s: %s\n"
+msgstr "אין אפשרות לעבד את הפרמטר: %s\n"
+
+#: batticonplus.c:261
 msgid "List of available icon types:\n"
 msgstr "רשימה של סוגי אייקונים אפשריים:\n"
 
-#: batticonplus.c:210 batticonplus.c:211 batticonplus.c:212
+#: batticonplus.c:262 batticonplus.c:263 batticonplus.c:264
 msgid "available"
 msgstr "אפשרי"
 
-#: batticonplus.c:210 batticonplus.c:211 batticonplus.c:212 batticonplus.c:540 batticonplus.c:548
-#: batticonplus.c:570
+#: batticonplus.c:262 batticonplus.c:263 batticonplus.c:264
 msgid "unavailable"
 msgstr "לא אפשרי"
 
-#: batticonplus.c:226
+#: batticonplus.c:278
 #, c-format
 msgid "Unknown icon type: %s\n"
 msgstr "סוג אייקון לא ידוע: %s\n"
 
-#: batticonplus.c:238
+#: batticonplus.c:290
 msgid "No icon type found!\n"
 msgstr "לא נמצא סוג אייקון!\n"
 
-#: batticonplus.c:245
+#: batticonplus.c:297
 #, c-format
 msgid "Invalid update interval! It has been reset to default (%d seconds)\n"
 msgstr "מרווח עדכון לא אפשרי! חייבים לאפס אותו לברירת המחדל (%d שניות)\n"
 
-#: batticonplus.c:252
+#: batticonplus.c:304
 #, c-format
 msgid "Invalid low level! It has been reset to default (%d percent)\n"
 msgstr "רמת סוללה נמוכה לא אפשרית! איפסנו אותה לברירת המחדל (%d אחוזים)\n"
 
-#: batticonplus.c:257
+#: batticonplus.c:309
 #, c-format
 msgid "Invalid critical level! It has been reset to default (%d percent)\n"
 msgstr ""
 "רמת סוללה נמוכה קריטית לא אפשרית! איפסנו אותה לברירת המחדל שלה  (%d אחוזים)\n"
 
-#: batticonplus.c:263
-msgid "Critical level is higher than low level! They have been reset to default\n"
+#: batticonplus.c:315
+msgid ""
+"Critical level is higher than low level! They have been reset to default\n"
 msgstr ""
-"רמת סוללה קריטית גבוהה יותר מרמת הסוללה הנמוכה (לא קריטית). איפסנו את שתיהן לברירת "
-"המחדל\n"
+"רמת סוללה קריטית גבוהה יותר מרמת הסוללה הנמוכה (לא קריטית). איפסנו את שתיהן "
+"לברירת המחדל\n"
 
-#: batticonplus.c:294 batticonplus.c:326
+#: batticonplus.c:409 batticonplus.c:444
 #, c-format
 msgid "type: %-*.*s\tid: %-*.*s\tpath: %s\n"
 msgstr "סוג: %-*.*s\tמזהה: %-*.*s\tנתיב: %s\n"
 
-#: batticonplus.c:294
+#: batticonplus.c:409
 msgid "Battery"
 msgstr "סוללה"
 
-#: batticonplus.c:326
+#: batticonplus.c:444
 msgid "AC"
 msgstr "AC"
 
-#: batticonplus.c:348
+#: batticonplus.c:466
 #, c-format
 msgid "Cannot open sysfs directory: %s (%s)\n"
 msgstr "לא אפשרי לפתוח את תקיית sysfs: %s (%s)\n"
 
-#: batticonplus.c:355
+#: batticonplus.c:473
 #, c-format
 msgid "No battery with suffix %s found!\n"
 msgstr "לא נמצאה סוללה בעלת סיומת %s\n"
 
-#: batticonplus.c:360
+#: batticonplus.c:478
 msgid "No battery nor AC power supply found!\n"
 msgstr "לא נמצאה סוללה או אספקת AC!\n"
 
-#: batticonplus.c:672 batticonplus.c:675
+#: batticonplus.c:827 batticonplus.c:829
 msgid "AC only, no battery!"
 msgstr "AC בלבד, ללא סוללה!"
 
-#: batticonplus.c:793
+#: batticonplus.c:956
+#, fuzzy, c-format
+msgid "Spawning low battery level command in 5 seconds: %s"
+msgstr "מבצע פקודת סוללה נמוכה ברמה קריטית בעוד 30 שניות: %s"
+
+#: batticonplus.c:961
+#, fuzzy
+msgid "Skipping low battery level command, no longer discharging"
+msgstr "מבצע פקודת סוללה נמוכה ברמה קריטית בעוד 30 שניות: %s"
+
+#: batticonplus.c:967 batticonplus.c:969
+#, fuzzy, c-format
+msgid "Cannot spawn low battery level command: %s\n"
+msgstr "לא מסוגל לבצע את פקודת הסוללה הנמוכה קריטית: %s\n"
+
+#: batticonplus.c:974
+#, fuzzy
+msgid "Cannot spawn low battery level command!"
+msgstr "לא מסוגל לבצע את פקודת הסוללה הנמוכה קריטית!"
+
+#: batticonplus.c:984
 #, c-format
 msgid "Spawning critical battery level command in 30 seconds: %s"
 msgstr "מבצע פקודת סוללה נמוכה ברמה קריטית בעוד 30 שניות: %s"
 
-#: batticonplus.c:797
+#: batticonplus.c:989
+#, fuzzy
+msgid "Skipping critical battery level command, no longer discharging"
+msgstr "מבצע פקודת סוללה נמוכה ברמה קריטית בעוד 30 שניות: %s"
+
+#: batticonplus.c:995 batticonplus.c:997
 #, c-format
 msgid "Cannot spawn critical battery level command: %s\n"
 msgstr "לא מסוגל לבצע את פקודת הסוללה הנמוכה קריטית: %s\n"
 
-#: batticonplus.c:800
+#: batticonplus.c:1002
 msgid "Cannot spawn critical battery level command!"
 msgstr "לא מסוגל לבצע את פקודת הסוללה הנמוכה קריטית!"
 
-#: batticonplus.c:817
+#: batticonplus.c:1017 batticonplus.c:1019
 #, c-format
 msgid "Cannot spawn left click command: %s\n"
 msgstr "לא מסוגל לבצע את פקודת הלחצן השמאלי: %s\n"
 
-#: batticonplus.c:820
+#: batticonplus.c:1024
 msgid "Cannot spawn left click command!"
 msgstr "לא מסוגל לבצע את פקודת הלחצן השמאלי!"
 
-#: batticonplus.c:884
+#: batticonplus.c:1088
 msgid "Battery is missing!"
 msgstr "הסוללה חסרה!"
 
-#: batticonplus.c:888
+#: batticonplus.c:1092
 msgid "Battery status is unknown!"
 msgstr "מצב הסוללה לא ידוע!"
 
-#: batticonplus.c:892
+#: batticonplus.c:1096
 msgid "Battery is charged!"
 msgstr "הסוללה טעונה!"
 
-#: batticonplus.c:896
+#: batticonplus.c:1100
+#, c-format
 msgid "Battery is discharging (%i%% remaining)"
 msgstr "הסוללה לא בהטענה (%i%% נשארו)"
 
-#: batticonplus.c:900
+#: batticonplus.c:1104
+#, c-format
 msgid "Battery is not charging (%i%% remaining)"
 msgstr "הסוללה לא בהטענה (%i%% נשארו)"
 
-#: batticonplus.c:904
+#: batticonplus.c:1108
+#, c-format
 msgid "Battery level is low! (%i%% remaining)"
 msgstr "רמת הסוללה נמוכה! (%i%% נשארו)"
 
-#: batticonplus.c:908
+#: batticonplus.c:1112
+#, c-format
 msgid "Battery level is critical! (%i%% remaining)"
 msgstr "רמת הסוללה נמוכה בצורה קריטית! (%i%% נשארו)"
 
-#: batticonplus.c:912
+#: batticonplus.c:1116
+#, c-format
 msgid "Battery is charging (%i%%)"
 msgstr "הסוללה בהטענה (%i%%)"
 
-#: batticonplus.c:941
+#: batticonplus.c:1145
+#, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d דקה"
 msgstr[1] "%d דקות"
 
-#: batticonplus.c:942
+#: batticonplus.c:1146
+#, c-format
 msgid "%d hour, %s remaining"
 msgid_plural "%d hours, %s remaining"
 msgstr[0] "%d שעה, %s נשארה"
 msgstr[1] "%d שעות, %s נשארו"
 
-#: batticonplus.c:944
+#: batticonplus.c:1148
+#, c-format
 msgid "%d minute remaining"
 msgid_plural "%d minutes remaining"
 msgstr[0] "%d דקה נשארה"
 msgstr[1] "%d דקות נשארו"
+
+#: batticonplus.c:1271
+#, c-format
+msgid "Maximum Capacity: %i%%"
+msgstr ""

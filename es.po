@@ -5,247 +5,299 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: batticonplus 1.6.7\n"
-"Report-Msgid-Bugs-To: valere.monseur@ymail.com\n"
-"POT-Creation-Date: 2015-12-13 22:28+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-17 14:43+0200\n"
 "PO-Revision-Date: 2022-02-08 08:33+0000\n"
+"Last-Translator: Mauricio Luis de Medeiros <jesusmlmph@gmail.com>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
-"Last-Translator: Mauricio Luis de Medeiros <jesusmlmph@gmail.com>\n"
-"Language: es\n"
 
-#: batticonplus.c:154
+#: batticonplus.c:191
 msgid "Display the version"
 msgstr "Mostrar la versión"
 
-#: batticonplus.c:155
+#: batticonplus.c:192
 msgid "Display debug information"
 msgstr "Mostrar información de depuración"
 
-#: batticonplus.c:156
+#: batticonplus.c:193
 msgid "Set update interval (in seconds)"
 msgstr "Establecer intervalo de actualización (en segundos)"
 
-#: batticonplus.c:157
+#: batticonplus.c:194
 msgid "Set icon type ('standard', 'notification' or 'symbolic')"
 msgstr "Establecer tipo de icono ('estándar', 'notificación' o 'simbólico')"
 
-#: batticonplus.c:158
+#: batticonplus.c:195
 msgid "Set low battery level (in percent)"
 msgstr "Establecer nivel de batería bajo (en porcentaje)"
 
-#: batticonplus.c:159
+#: batticonplus.c:196
 msgid "Set critical battery level (in percent)"
 msgstr "Establecer el nivel crítico de la batería (en porcentaje)"
 
-#: batticonplus.c:160
+#: batticonplus.c:197
+#, fuzzy
+msgid "Command to execute when low battery level is reached"
+msgstr "Comando a ejecutar cuando se alcanza el nivel crítico de batería"
+
+#: batticonplus.c:198
 msgid "Command to execute when critical battery level is reached"
 msgstr "Comando a ejecutar cuando se alcanza el nivel crítico de batería"
 
-#: batticonplus.c:161
+#: batticonplus.c:199
 msgid "Command to execute when left clicking on tray icon"
 msgstr ""
 "Comando a ejecutar al hacer clic con el botón izquierdo en el icono de la "
 "bandeja"
 
-#: batticonplus.c:163
+#: batticonplus.c:201
 msgid "Hide the notification popups"
 msgstr "Ocultar las ventanas emergentes de notificación"
 
-#: batticonplus.c:165
+#: batticonplus.c:203
 msgid "List available icon types"
 msgstr "Lista de tipos de iconos disponibles"
 
-#: batticonplus.c:166
+#: batticonplus.c:204
+msgid "Use custom icon theme by name"
+msgstr ""
+
+#: batticonplus.c:205
 msgid "List available power supplies (battery and AC)"
 msgstr "Lista de fuentes de alimentación disponibles (batería y CA)"
 
-#: batticonplus.c:170
+#: batticonplus.c:209
 msgid "[BATTERY ID]"
 msgstr "[ID DE BATERÍA]"
 
-#: batticonplus.c:174
+#: batticonplus.c:210
+msgid "Suppress the startup notification"
+msgstr "Suprimir la notificación de inicio"
+
+#: batticonplus.c:211
+msgid "Warn when charging and level reached"
+msgstr "Avisar cuando se está cargando y se alcanza el nivel"
+
+#: batticonplus.c:213
 #, c-format
 msgid "Cannot parse command line arguments: %s\n"
 msgstr "No se pueden analizar los argumentos de la línea de comando: %s\n"
 
-#: batticonplus.c:185
+#: batticonplus.c:224
 msgid ""
-"batticonplus: a lightweight and fast battery icon that sits in your system tray\n"
+"batticonplus: a lightweight and fast battery icon that sits in your system "
+"tray\n"
 msgstr ""
-"batticonplus: un ícono de batería liviano y rápido que se encuentra en la bandeja "
-"del sistema\n"
+"batticonplus: un ícono de batería liviano y rápido que se encuentra en la "
+"bandeja del sistema\n"
 
-#: batticonplus.c:186
+#: batticonplus.c:225
 #, c-format
 msgid "version %s\n"
 msgstr "versión %s\n"
 
-#: batticonplus.c:194
+#: batticonplus.c:233
 msgid "List of available power supplies:\n"
 msgstr "Lista de fuentes de alimentación disponibles:\n"
 
-#: batticonplus.c:209
+#: batticonplus.c:248
+#, fuzzy, c-format
+msgid "Cannot use icon theme %s: %s\n"
+msgstr "No se pueden analizar los argumentos de la línea de comando: %s\n"
+
+#: batticonplus.c:261
 msgid "List of available icon types:\n"
 msgstr "Lista de tipos de iconos disponibles:\n"
 
-#: batticonplus.c:210 batticonplus.c:211 batticonplus.c:212
+#: batticonplus.c:262 batticonplus.c:263 batticonplus.c:264
 msgid "available"
 msgstr "disponible"
 
-#: batticonplus.c:210 batticonplus.c:211 batticonplus.c:212 batticonplus.c:540
-#: batticonplus.c:548 batticonplus.c:570
+#: batticonplus.c:262 batticonplus.c:263 batticonplus.c:264
 msgid "unavailable"
 msgstr "indisponible"
 
-#: batticonplus.c:226
+#: batticonplus.c:278
 #, c-format
 msgid "Unknown icon type: %s\n"
 msgstr "Tipo de icono desconocido: %s\n"
 
-#: batticonplus.c:238
+#: batticonplus.c:290
 msgid "No icon type found!\n"
 msgstr "¡No se ha encontrado ningún tipo de icono!\n"
 
-#: batticonplus.c:245
+#: batticonplus.c:297
 #, c-format
 msgid "Invalid update interval! It has been reset to default (%d seconds)\n"
 msgstr ""
 "¡Intervalo de actualización no válido! Se ha restablecido a los valores "
 "predeterminados (%d segundos)\n"
 
-#: batticonplus.c:252
+#: batticonplus.c:304
 #, c-format
 msgid "Invalid low level! It has been reset to default (%d percent)\n"
 msgstr ""
 "¡Nivel bajo no válido! Se ha restablecido a los valores predeterminados (%d "
 "por ciento)\n"
 
-#: batticonplus.c:257
+#: batticonplus.c:309
 #, c-format
 msgid "Invalid critical level! It has been reset to default (%d percent)\n"
 msgstr ""
 "¡Nivel crítico no válido! Se ha restablecido a los valores predeterminados "
 "(%d por ciento)\n"
 
-#: batticonplus.c:263
+#: batticonplus.c:315
 msgid ""
 "Critical level is higher than low level! They have been reset to default\n"
 msgstr ""
 "¡El nivel crítico es más alto que el nivel bajo! Se han restablecido a los "
 "valores predeterminados.\n"
 
-#: batticonplus.c:294 batticonplus.c:326
+#: batticonplus.c:409 batticonplus.c:444
 #, c-format
 msgid "type: %-*.*s\tid: %-*.*s\tpath: %s\n"
 msgstr "tipo: %-*.*s \tid: %-*.*s \truta: %s\n"
 
-#: batticonplus.c:294
+#: batticonplus.c:409
 msgid "Battery"
 msgstr "Batería"
 
-#: batticonplus.c:326
+#: batticonplus.c:444
 msgid "AC"
 msgstr "Fuente de alimentación"
 
-#: batticonplus.c:348
+#: batticonplus.c:466
 #, c-format
 msgid "Cannot open sysfs directory: %s (%s)\n"
 msgstr "Imposible abrir el directorio sysfs: %s (%s)\n"
 
-#: batticonplus.c:355
+#: batticonplus.c:473
 #, c-format
 msgid "No battery with suffix %s found!\n"
 msgstr "¡No se encontró ninguna batería con el sufijo %s!\n"
 
-#: batticonplus.c:360
+#: batticonplus.c:478
 msgid "No battery nor AC power supply found!\n"
 msgstr "¡No se ha encontrado ninguna batería ni fuente de alimentación!\n"
 
-#: batticonplus.c:672 batticonplus.c:675
+#: batticonplus.c:827 batticonplus.c:829
 msgid "AC only, no battery!"
 msgstr "¡Solo fuente de alimentación, sin batería!"
 
-#: batticonplus.c:793
+#: batticonplus.c:956
+#, fuzzy, c-format
+msgid "Spawning low battery level command in 5 seconds: %s"
+msgstr "Generación de comando de nivel de batería crítico en 30 segundos: %s"
+
+#: batticonplus.c:961
+#, fuzzy
+msgid "Skipping low battery level command, no longer discharging"
+msgstr "Generación de comando de nivel de batería crítico en 30 segundos: %s"
+
+#: batticonplus.c:967 batticonplus.c:969
+#, fuzzy, c-format
+msgid "Cannot spawn low battery level command: %s\n"
+msgstr "No se puede generar el comando de nivel de batería crítico: %s\n"
+
+#: batticonplus.c:974
+#, fuzzy
+msgid "Cannot spawn low battery level command!"
+msgstr "¡No se puede generar un comando de nivel de batería crítico!"
+
+#: batticonplus.c:984
 #, c-format
 msgid "Spawning critical battery level command in 30 seconds: %s"
 msgstr "Generación de comando de nivel de batería crítico en 30 segundos: %s"
 
-#: batticonplus.c:797
+#: batticonplus.c:989
+#, fuzzy
+msgid "Skipping critical battery level command, no longer discharging"
+msgstr "Generación de comando de nivel de batería crítico en 30 segundos: %s"
+
+#: batticonplus.c:995 batticonplus.c:997
 #, c-format
 msgid "Cannot spawn critical battery level command: %s\n"
 msgstr "No se puede generar el comando de nivel de batería crítico: %s\n"
 
-#: batticonplus.c:800
+#: batticonplus.c:1002
 msgid "Cannot spawn critical battery level command!"
 msgstr "¡No se puede generar un comando de nivel de batería crítico!"
 
-#: batticonplus.c:817
+#: batticonplus.c:1017 batticonplus.c:1019
 #, c-format
 msgid "Cannot spawn left click command: %s\n"
 msgstr "No se puede generar el comando de clic izquierdo: %s\n"
 
-#: batticonplus.c:820
+#: batticonplus.c:1024
 msgid "Cannot spawn left click command!"
 msgstr "¡No se puede generar el comando de clic izquierdo!"
 
-#: batticonplus.c:884
+#: batticonplus.c:1088
 msgid "Battery is missing!"
 msgstr "¡Falta la batería!"
 
-#: batticonplus.c:888
+#: batticonplus.c:1092
 msgid "Battery status is unknown!"
 msgstr "¡Se desconoce el estado de la batería!"
 
-#: batticonplus.c:892
+#: batticonplus.c:1096
 msgid "Battery is charged!"
 msgstr "¡La batería está cargada!"
 
-#: batticonplus.c:896
+#: batticonplus.c:1100
 #, c-format
 msgid "Battery is discharging (%i%% remaining)"
 msgstr "La batería se está descargando (%i%% restante)"
 
-#: batticonplus.c:900
+#: batticonplus.c:1104
 #, c-format
 msgid "Battery is not charging (%i%% remaining)"
 msgstr "La batería no se está cargando (%i%% restante)"
 
-#: batticonplus.c:904
+#: batticonplus.c:1108
 #, c-format
 msgid "Battery level is low! (%i%% remaining)"
 msgstr "¡El nivel de la batería es bajo! (%i%% restante)"
 
-#: batticonplus.c:908
+#: batticonplus.c:1112
 #, c-format
 msgid "Battery level is critical! (%i%% remaining)"
 msgstr "¡El nivel de la batería es crítico! (%i%% restante)"
 
-#: batticonplus.c:912
+#: batticonplus.c:1116
 #, c-format
 msgid "Battery is charging (%i%%)"
 msgstr "La batería se está cargando (%i%%)"
 
-#: batticonplus.c:941
+#: batticonplus.c:1145
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuto"
 msgstr[1] "%d minutos"
 
-#: batticonplus.c:942
+#: batticonplus.c:1146
 #, c-format
 msgid "%d hour, %s remaining"
 msgid_plural "%d hours, %s remaining"
 msgstr[0] "%d hora, quedan %s"
 msgstr[1] "%d horas, quedan %s"
 
-#: batticonplus.c:944
+#: batticonplus.c:1148
 #, c-format
 msgid "%d minute remaining"
 msgid_plural "%d minutes remaining"
 msgstr[0] "%d minuto quedan"
 msgstr[1] "%d minutos quedan"
+
+#: batticonplus.c:1271
+#, c-format
+msgid "Maximum Capacity: %i%%"
+msgstr ""

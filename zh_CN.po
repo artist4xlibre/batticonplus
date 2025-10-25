@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: batticonplus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-02 10:40+0800\n"
+"POT-Creation-Date: 2025-10-17 14:43+0200\n"
 "PO-Revision-Date: 2025-01-02 10:41+0800\n"
 "Last-Translator: Bing Liu<sipingal@163.com>\n"
 "Language-Team: N/A\n"
@@ -75,6 +75,14 @@ msgstr "列出可用的电源（电池和交流电）"
 msgid "[BATTERY ID]"
 msgstr "[电池 ID]"
 
+#: batticonplus.c:210
+msgid "Suppress the startup notification"
+msgstr "抑制启动通知"
+
+#: batticonplus.c:211
+msgid "Warn when charging and level reached"
+msgstr "充电时发出警告，当电量达到设定值时提醒"
+
 #: batticonplus.c:213
 #, c-format
 msgid "Cannot parse command line arguments: %s\n"
@@ -125,7 +133,6 @@ msgstr "未找到图标类型！\n"
 #, c-format
 msgid "Invalid update interval! It has been reset to default (%d seconds)\n"
 msgstr "无效的更新间隔！已重置为默认值（%d 秒）\n"
-
 
 #: batticonplus.c:304
 #, c-format
@@ -272,3 +279,8 @@ msgstr[0] "剩余 %d 小时 %s"
 msgid "%d minute remaining"
 msgid_plural "%d minutes remaining"
 msgstr[0] "剩余 %d 分钟"
+
+#: batticonplus.c:1271
+#, c-format
+msgid "Maximum Capacity: %i%%"
+msgstr ""
